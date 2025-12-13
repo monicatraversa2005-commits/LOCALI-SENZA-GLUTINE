@@ -1,0 +1,2355 @@
+
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+ <title> LOCALI SENZA GLUTINE</title>
+<style>
+/* ===========================
+   Variabili + reset base
+=========================== */
+:root {
+  --bg-1: #f5efeb;
+  --bg-2: #ffffff;
+  --text: #000;
+  --muted: #666;
+  --radius: 10px;
+  --max-width: 1200px;
+  --gap: 12px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f5efeb;
+  color: var(--text);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+/* ===========================
+   Layout principale
+=========================== */
+.app {
+  max-width: var(--max-width);
+  margin: 28px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: var(--gap);
+  align-items: start;
+}
+
+header {
+  grid-column: 1 / -1;
+  margin-bottom: 6px;
+}
+
+h1 { margin: 0; font-size: 30px; letter-spacing: -.2px; }
+p.lead { margin:6px 0 18px; color: var(--muted); font-size: 14px; }
+
+/* ===========================
+   Pannelli / Cards
+=========================== */
+.panel {
+  background: #f5efeb;
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+
+.left .search { display:flex; gap:8px; margin-bottom:12px; }
+.left .search input {
+  flex:1;
+  padding:10px 12px;
+  border-radius: 10px;
+  border:1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  color: var(--text);
+  outline: none;
+  font-size:30px;
+}
+.left .search input::placeholder { color: rgba(255,255,255,0.25); }
+.left .search button {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight:600;
+}
+
+/* Lista Stati */
+.countries-list {
+  max-height: 62vh;
+  overflow:auto;
+  padding-right:6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.country {
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:8px;
+  user-select:none;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+  background: transparent;
+}
+.country:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+.country .name { font-weight:600; }
+.country .meta { font-size:12px; color:var(--muted); }
+
+/* Stato selezionato */
+.country.selected {
+  background: linear-gradient(90deg, rgba(96,165,250,0.10), rgba(96,165,250,0.02));
+  box-shadow: inset 0 0 0 1px rgba(96,165,250,0.04);
+}
+
+/* ===========================
+   Area dettaglio / breadcrumb
+=========================== */
+.right .breadcrumb {
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+/* Griglia regioni */
+.regions-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap:12px;
+}
+
+.region-card {
+  background: rgba(255,255,255,0.02);
+  padding:10px;
+  border-radius:10px;
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.region-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(2,6,23,0.45);
+}
+.region-card .muted { font-size:12px; color:var(--muted); }
+
+/* Pulsanti minimal */
+button[aria-expanded], .region-card button, .left .search button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text);
+}
+button[aria-expanded]:hover, .region-card button:hover, .left .search button:hover {
+  border-color: rgba(96,165,250,0.18);
+  transform: translateY(-2px);
+}
+
+/* Lista sotto-livello */
+ul { padding-left:18px; margin:8px 0; }
+li { margin-bottom:6px; font-size:14px; }
+
+/* Footer */
+footer { grid-column:1/-1; margin-top:12px; color:var(--muted); font-size:13px; }
+
+/* ===========================
+   Accessibilità + focus
+=========================== */
+.country:focus, .country button:focus, .left .search input:focus, .region-card button:focus {
+  outline: 3px solid rgba(96,165,250,0.14);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   Titoli e link
+=========================== */
+.titolo {
+  text-align: center;
+  color: #567c8d;
+  font-size: 40px;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  margin: 20px 0;
+  letter-spacing: 1px;
+}
+
+.link-italia {
+  color: #2f4156;
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  font-weight: bold;
+  font-size: 35px;
+  display: block;
+  margin-bottom: 10px;
+}
+.link-italia:hover {
+  color: #567c8d;
+  background-color: transparent;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.link-italia:active {
+  background-color: #2f4156;
+  color: #ffffff;
+}
+
+/* ===========================
+   Tabelle generali*/
+
+table th, table td {
+  border: 0px solid #5f9296;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Colonna bollino più stretta */
+table th:first-child,
+table td:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+/* Le altre colonne si adattano automaticamente */
+table th:not(:first-child),
+table td:not(:first-child) {
+  width: auto;
+}
+
+/* ===========================
+   Tipi locali (colori header)
+=========================== */
+.pizzeria th { background: #EFC285; }
+.pub th { background: #B5E6A2; }
+.ristoranti th { background: #A6C9EC; }
+.rosticceria th { background: #F1A983; }
+.aperitivo th { background: #FFFFC1; }
+.braceria th { background: #B84F14; }
+.internazionale th { background: #e95356; }
+.gelateria th { background: #F2CEEF; }
+.creperia th { background: #ca904e; }
+.pasticceria th { background: #94DCF8; }
+.bar th { background: #D9D9D9; }
+.alimentari th { background: #FCD4DD; }
+
+/* ===========================
+   Media query per mobile
+=========================== */
+@media(max-width: 480px) {
+  h1 { font-size: 7vw; }
+  h2 { font-size: 5.5vw; }
+  h3 { font-size: 5vw; }
+  .link-italia { font-size: 5vw; }
+  table { font-size: 4vw; }
+  .country .name { font-size: 5vw; }
+  .country .meta { font-size: 4vw; }
+}
+</style>
+
+
+
+
+
+<link media='all' />
+ <header>
+    <p id="titolo" class="titolo">LOCALI SENZA GLUTINE</p>
+
+<!-- STATI -->
+    <nav>
+      <div id="stati" style="display:block; margin-top:20px;">
+        <ul>
+          <li id="link-italia-li">
+           <a href="#" class="link-italia" onclick="showRegions()">ITALIA</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+<!-- REGIONI -->
+<div id="regioni" style="display:none; margin-top:20px;">
+  <button onclick="showStatesBack()">← Torna agli stati</button>
+  <ul>
+    <li><a href="#" class="link-italia" onclick="showCitta('Abruzzo')">Abruzzo</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Basilicata')">Basilicata</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Calabria')">Calabria</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Campania')">Campania</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Emilia-Romagna')">Emilia-Romagna</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Friuli Venezia Giulia')">Friuli Venezia Giulia</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Lazio')">Lazio</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Liguria')">Liguria</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Lombardia')">Lombardia</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Marche')">Marche</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Molise')">Molise</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Piemonte')">Piemonte</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('puglia')">Puglia</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Sardegna')">Sardegna</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Sicilia')">Sicilia</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Toscana')">Toscana</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Trentino-Alto Adige')">Trentino-Alto Adige</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Umbria')">Umbria</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Valle d\'Aosta')">Valle d'Aosta</a></li>
+    <li><a href="#" class="link-italia" onclick="showCitta('Veneto')">Veneto</a></li>
+  </ul>
+</div>
+
+<!-- PUGLIA -->
+<div id="puglia" style="display:none;">
+  <button onclick="showRegionsBack('puglia')">← Torna alle regioni</button>
+  <a href="#" class="link-italia" onclick="showLocali('acquaviva delle fonti','puglia')">Aquaviva delle Fonti</a>
+  <a href="#" class="link-italia" onclick="showLocali('adelfia','puglia')">Adelfia</a>
+  <a href="#" class="link-italia" onclick="showLocali('alberobello','puglia')">Alberobello</a>
+  <a href="#" class="link-italia" onclick="showLocali('altamura','puglia')">Altamura</a>
+  <a href="#" class="link-italia" onclick="showLocali('andria','puglia')">Andria</a>
+  <a href="#" class="link-italia" onclick="showLocali('bari','puglia')">Bari</a>
+  <a href="#" class="link-italia" onclick="showLocali('capurso','puglia')">Capurso</a>
+  <a href="#" class="link-italia" onclick="showLocali('casamassima','puglia')">Casamassima</a>
+  <a href="#" class="link-italia" onclick="showLocali('castellana grotte','puglia')">Castellana Grotte</a>
+  <a href="#" class="link-italia" onclick="showLocali('cellamare','puglia')">Cellamare</a>
+  <a href="#" class="link-italia" onclick="showLocali('conversano','puglia')">Conversano</a>
+  <a href="#" class="link-italia" onclick="showLocali('giovinazzo','puglia')">Giovinazzo</a>
+  <a href="#" class="link-italia" onclick="showLocali('mola di bari','puglia')">Mola di Bari</a>
+  <a href="#" class="link-italia" onclick="showLocali('molfetta','puglia')">Molfetta</a>
+  <a href="#" class="link-italia" onclick="showLocali('monopoli','puglia')">Monopoli</a>
+  <a href="#" class="link-italia" onclick="showLocali('polignano','puglia')">Polignano</a>
+  <a href="#" class="link-italia" onclick="showLocali('putignano','puglia')">Putignano</a>
+  <a href="#" class="link-italia" onclick="showLocali('torre a mare','puglia')">Torre a mare</a>
+  <a href="#" class="link-italia" onclick="showLocali('trani','puglia')">Trani</a>
+  <a href="#" class="link-italia" onclick="showLocali('valenzano','puglia')">Valenzano</a>
+</div>
+
+<!-- ACQUAVIVA DELLE FONTI -->
+<div id="acquaviva delle fonti" style="display:none;">
+  <button onclick="showCittaBack('acquaviva delle fonti','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Italians Ristopizza</td><td>Via Arco Tampoia, 5</td><td style="color:transparent;">●</td><td>cena (mercoledì chiuso)</td></tr>
+      <tr><td>La Tana di Aldo</td><td>Via Giovanni Squicciarini, 8</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+      <tr><td>Il Principe</td><td>Via Maselli Campagna, 221</td><td style="color:transparent;">●</td><td>cena</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Il covo del tesoro (Barbanera)</td><td> Str. Vicinale Cellamare</td><td style="color:green;">●</td><td>cena</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Cecenero</td><td>Piazza Maria Santissima di Costantinopoli, 5</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena, lunedì chiuso)</td></tr>
+    <tr><td>Ristorante Il Principe</td><td>Via Maselli Campagna, 221</td><td style="color:transparent;">●</td><td>cena</td></tr>
+    <tr><td>Pizzicà</td><td>Piazza dei Martiri, 41</td><td style="color:transparent;">●</td><td>cena</td><td>pizza, panzerotti</td></tr>
+    <tr><td>La Ngegne</td><td>Via della Cimaglia</td><td style="color:transparent;">●</td><td>cena</td><td>agriturismo con animali</td></tr>
+    <tr><td>T-Bone 50°</td><td>Arco Santa Chiara, 7</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td><td>humburger, fritti, aperitivo</td></tr>
+    <tr><td>Le Quattro Stagioni</td><td>Piazza dei Martiri, 10</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> cena)</td></tr>
+  </tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Gelateria Pastore</td><td>Via Roma, 40</td><td style="color:transparent;">●</td><td>06:30 - 0:00 (giovedì chiuso)</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ADELFIA -->
+<div id="adelfia" style="display:none;">
+  <button onclick="showCittaBack('adelfia','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Fuochi Braceria Pizzeria</td><td>Via Vittorio Veneto, 4</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Al Castello</td><td>Via Sottotenente Sinisi, 10</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td><td>da prenotare telefonicamente</td></tr>
+    </tbody>
+  </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>JASTER CLUB</td><td>Via Vittorio Veneto</td><td style="color:transparent;">●</td><td>cena (lunedì, domenica -> pranzo, cena)</td></tr>
+  </tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Vivè</td><td>Via Vittorio Veneto, 4</td><td style="color:transparent;">●</td><td>6:30 – 20:30 (domenica chiuso)</td><td>caffetteria, gelateria, cioccolateria</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ALBEROBELLO -->
+<div id="alberobello" style="display:none;">
+  <button onclick="showCittaBack('alberobello','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Restaurant Pizzeria Il Fragno</td><td>Strada Provinciale Alberobello-Locorotondo, 98 Zona B</td><td style="color:transparent;">●</td><td>cena (mecoledì chiuso)</td></tr>
+      <tr><td>Ristorante Pizzeria Il Pinnacolo</td><td>Via Monte Nero, 30</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Paninoteca Pane e Mozza</td><td>Largo Martellotta, 31</td><td style="color:transparent;">●</td><td>pranzo</td><td>panini, puccia e dolci</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Coppino Alberobello</td><td>Largo Trevisani, 18</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+      <tr><td>Puglianova</td><td>Via N. Piccinni, 8</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì chiuso)</td></tr>
+      <tr><td>100METRICUBI</td><td>Largo Martellotta Cosmo, 50</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Ristorante Fidelio</td><td>Contrada Popoleto 12 Ss 172 Dei Trulli</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Paco Wines Eno-Winery</td><td>Via Monte Nero, 2</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì chiuso)</td></tr>
+      <tr><td>Ristorante Trullo D'Oro</td><td>Via Felice Cavallotti, 27</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, lunedì chiuso)</td></tr>
+      <tr><td>Gli Ulivi</td><td>Contrada Popoleto, 15</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+      <tr><td>Trattoria Da Donato</td><td>Via Angelo Turi, 98A</td><td style="color:transparent;">●</td><td>cena (sabato, domenica -> pranzo, cena; martedì chiuso)</td></tr>
+      <tr><td>Il Poeta Contadino</td><td>Via Indipendenza, 21</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Il Guercio di Puglia</td><td>Via Imbriani, 6</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; mercoledì chiuso)</td></tr>
+      <tr><td>La Nicchia</td><td>SS 172 dei Trulli Km. 33.3</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+      <tr><td>Ristorante Pizzeria Il Pinnacolo</td><td>Via Monte Nero, 30</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+      <tr><td>Osteria Del Poeta</td><td>Via Indipendenza, 23</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+      <tr><td>Trullo dei Sapori</td><td>Piazza Antonio Curri, 3</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+      <tr><td>Ristorante Trullo Garden</td><td>Via Piave, 35</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+      <tr><td>Masseria Torricella Restaurant</td><td>Strada Provinciale Canale di Pirro 19</td><td style="color:transparent;">●</td><td>cena</td></tr>
+      <tr><td>Ristorante Trattoria "Largo Trevisani"</td><td>Largo Pietro Trevisani, 13</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+      <tr><td>Ristorante Casa Nova</td><td>Via Monte San Marco, 13</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+      <tr><td>Restaurant Pizzeria Il Fragno</td><td>Strada Provinciale Alberobello-Locorotondo, 98 Zona B</td><td style="color:transparent;">●</td><td>cena (mecoledì chiuso)</td></tr>
+      <tr><td>Trulli Panoramici</td><td>Località Canale di Pirro 280, SP 81 km 6,5</td><td style="color:transparent;">●</td><td></td><td>agriturismo</td></tr>
+  </tbody>
+</table>
+
+<table class="braceria">
+  <thead>
+    <tr>
+      <th>BRACERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Macelleria Braceria Miccolis</td><td>Via Cavour, 66/68</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+</tbody>
+</table>
+
+<table class="pasticceria">
+  <thead>
+    <tr>
+      <th>PASTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Paninoteca Pane e Mozza</td><td>Largo Martellotta, 31</td><td style="color:transparent;">●</td><td>8:00 - 15:00</td><td>panini, puccia e dolci</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Gelateria gentile</td><td>Piazza Giacomo Matteotti, 6</td><td style="color:transparent;">●</td><td>11:00 - 20:00 (lunedì chiuso)</td></tr>
+      <tr><td>La bottega del Gelato</td><td>Via Fausto Arturo Cucci, 29</td><td style="color:transparent;">●</td><td>11:30 - 21:30</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- ALTAMURA -->
+<div id="altamura" style="display:none;">
+  <button onclick="showCittaBack('altamura','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Pane & Core</td><td>Via Centonze Antonia, 2</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Pepe Nero</td><td>Via Luigi Pirandello</td><td style="color:transparent;">●</td><td>cena (domenica chiuso)</td></tr>
+<tr><td>Stile Libero</td><td>Via Mura Megalitiche, 1</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+<tr><td>Kyklos</td><td>Via Trentacapilli, 42</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Porta Aurea</td><td>Via Cassano, 131</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo, cena)</td></tr>
+<tr><td>Pizzeria Vecchio Ponte</td><td>Via Araldo Di Crollalanza, 27</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>La Taberna</td><td>Via Santeramo (fronte Museo Archeologico)</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+<tr><td>Mercadante Pizza e Cucina</td><td>Via Bruxelles, 3</td><td style="color:transparent;">●</td><td>cena (mercoledì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Panzerotteria Panzè</td><td>Via Bari, 110</td><td style="color:transparent;">●</td><td>cena (domenica chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Tre Archi</td><td>Via S. Michele, 28</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+<tr><td>Hostàrì - Osteria Moderna</td><td>Via Massimo D'Azeglio, 6</td><td style="color:transparent;">●</td><td>cena (sabato → pranzo, cena | domenica, lunedì → pranzo)</td></tr>
+<tr><td>Mo è Osteria</td><td>Via Luca de Samuele Cagnazzi, 27</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo)</td></tr>
+<tr><td>Murà Masseria</td><td>S.P. 79 Cassano - Altamura, km 10.700 Contrada Sgolgore</td><td style="color:transparent;">●</td><td>pranzo, cena</td><td>sala ricevimenti</td></tr>
+<tr><td>Corte degli Svevi</td><td>Strada Statale 96 km 73.600</td><td style="color:transparent;">●</td><td>pranzo, cena</td><td>sala ricevimenti</td></tr>
+<tr><td>Trattoria Rosticceria Cenzino</td><td>S. Ambrogio, 15</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo)</td></tr>
+<tr><td>Alfonso Ristorante</td><td>Strada Provinciale, 157 3</td><td style="color:transparent;">●</td><td>DA CONTROLLARE PERCHÉ NON LO TROVO</td></tr>
+<tr><td>Osteria Tre Torri</td><td>Via Ostuni, 44</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso, domenica → pranzo)</td></tr>
+<tr><td>Masseria La Calcara</td><td>Strada Provinciale Ruvo</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Devo Ristorante Pizzeria</td><td>Viale Martiri 1799, 129</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso, domenica → pranzo)</td></tr>
+<tr><td>Il Postaccio</td><td>Via Belgrado, 31</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+<tr><td>Flavour</td><td>Via Quasimodo, 15</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+  </tbody>
+</table>
+
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Panificio La Maggiore</td><td>Via Matera, 180</td><td style="color:transparent;">●</td><td>8:00 - 21:00</td><td>panificio e dolci</td></tr>
+<tr><td>Panificio del Duomo</td><td>Via Nicola Melodia, 10/12</td><td style="color:transparent;">●</td><td>6:30 - 22:30 (domenica 9:30 - 15:30)</td></tr>
+</tbody>
+</table>
+
+<table class="pasticceria">
+  <thead>
+    <tr>
+      <th>PASTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Panificio La Maggiore</td><td>Via Matera, 180</td><td style="color:transparent;">●</td><td>8:00 - 21:00</td><td>panificio e dolci</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Bar Aurora</td><td>Viale Martiri del 1799, 25</td><td style="color:transparent;">●</td><td>7:00 - 13:00, 16:00 - 23:00 (martedì chiuso)</td></tr>
+<tr><td>Mokambo</td><td>Via San Giacomo, 1</td><td style="color:transparent;">●</td><td>6:30 - 23:30 (mercoledì chiuso)</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- ANDRIA -->
+<div id="andria" style="display:none;">
+  <button onclick="showCittaBack('andria','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr><td>Imperiale</td><td>Via Francesco Ferrucci, 175</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+        <tr><td>Il Rimedio</td><td>Piazza Vittorio Emanuele II, 61</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; martedì chiuso)</td></tr>
+        <tr><td>La locanda dei duchi</td><td>C.da S.Marzano - Castel del Monte</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì -> cena)</td></tr>
+        <tr><td>21 Gennaio</td><td>Via Francesco Ferrucci, 114</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+        <tr><td>Gusto Umami</td><td>Via della Pineta, 16</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì -> pranzo; sabato, domenica -> cena)</td></tr>
+        <tr><td>Il Primo Bacio</td><td>Via Bari, 11</td><td style="color:transparent;">●</td><td>pranzo (martedì chiuso)</td></tr>
+        <tr><td>Il Tagliere</td><td>Via Giacomo Ceruti, 13/15</td><td style="color:transparent;">●</td><td>pranzo, cena (h24)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Imperiale</td><td>Via Francesco Ferrucci, 175</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Il Rimedio</td><td>Piazza Vittorio Emanuele II, 61</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; martedì chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>Retroscena Showfood & Drink</td><td>Via Ettore Carafa, 12</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; lunedì, martedì chiuso)</td><td>con spettacoli</td></tr>
+      <tr><td>Radici - Enocucina</td><td>Via Giovanni Bovio, 89</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo; martedì chiuso)</td></tr>
+      <tr><td>Habla Restaurant</td><td>Via Lorenzo Bonomo, 11</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+      <tr><td>Est - Vinum et Cibus</td><td>Via Carlo Troya, 11</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+      <tr><td>Agriturismo Piano del Monaco</td><td>Strada Provincale 234 Km 24,400</td><td style="color:transparent;">●</td><td>pranzo</td></tr>
+      <tr><td>Bastian Contrario</td><td>Via Don Riccardo Lotti, 172</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica, lunedì -> pranzo; martedì chiuso)</td></tr>
+      <tr><td>MaMa</td><td>Corso Cavour, 27</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Masseria Montegusto</td><td>Strada Statale 170 Km 1,850</td><td style="color:transparent;">●</td><td>pranzo (lunedì chiuso)</td></tr>
+      <tr><td>IL PINO GRANDE - masseria CITULO</td><td>S.P.234 km 20 + 920</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Il Cortile</td><td>Via Francesco Ferrucci, 177/A</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td><td>pesce</td></tr>
+      <tr><td>Locanda de la Poste</td><td>Via Giovanni Bovio, 49</td><td style="color:transparent;">●</td><td></td><td>pesce</td></tr>
+      <tr><td>La locanda dei duchi</td><td>C.da S.Marzano - Castel del Monte</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì -> cena)</td></tr>
+      <tr><td>Il Rimedio</td><td>Piazza Vittorio Emanuele II, 61</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; martedì chiuso)</td></tr>
+  </tbody>
+</table>
+z
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Forneria del Senza Glutine</td><td>Contrada Monachelle, 3</td><td style="color:transparent;">●</td><td>9:00 - 16:00 (sabato, domenica chiuso)</td></tr>
+    <tr><td>Pastificio Fusiello</td><td>Via Francesco Ferrucci, 183</td><td style="color:transparent;">●</td><td></td><td>pasta, fritti, pane, pucce, crocchette, arancini</td></tr>
+</tbody>
+</table>
+
+<table class="pasticceria">
+  <thead>
+    <tr>
+      <th>PASTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Forneria del Senza Glutine</td><td>Contrada Monachelle, 3</td><td style="color:transparent;">●</td><td>9:00 - 16:00 (sabato, domenica chiuso)</td></tr>
+    <tr><td>iRegano</td><td>Corso Cavour, 62</td><td style="color:transparent;">●</td><td>8:00 - 0:00</td><td>gelati, torte</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Yogurtissimo</td><td>Via Giovanni Bovio, 93</td><td style="color:transparent;">●</td><td>18:00 - 22:00</td><td>solo yougurt</td></tr>
+    <tr><td>iRegano</td><td>Corso Cavour, 62</td><td style="color:transparent;">●</td><td>8:00 - 0:00</td><td>gelati, torte</td></tr>
+    <tr><td>Lattemiele caffè</td><td>Via Trani, 41</td><td style="color:transparent;">●</td>6:30 - 21:30 (lunedì chiuso)<td>cornetti, yogurt, gelati</td></tr>
+</tbody>
+</table>
+
+<table class="bar">
+  <thead>
+    <tr>
+      <th>BAR</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Bar Suite</td><td>Viale Istria, 26</td><td style="color:transparent;">●</td>6:15 - 21:15<td></td></tr>
+    <tr><td>Lattemiele caffè</td><td>Via Trani, 41</td><td style="color:transparent;">●</td>6:30 - 21:30 (lunedì chiuso)<td>cornetti, yogurt, gelati</td></tr>
+</tbody>
+</table>
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Assapora</td><td>Via Piero della Francesca, 95</td><td style="color:transparent;">●</td><td>8:00 - 13:30 (domenica chiuso)</td></tr>
+    <tr><td>Forneria del Senza Glutine</td><td>Contrada Monachelle, 3</td><td style="color:transparent;">●</td><td>9:00 - 16:00 (sabato, domenica chiuso)</td></tr>
+    <tr><td>Pastificio Fusiello</td><td>Via Francesco Ferrucci, 183</td><td style="color:transparent;">●</td><td></td><td>pasta, fritti, pane, pucce, crocchette, arancini</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- BARI -->
+<div id="bari" style="display:none;">
+  <button onclick="showCittaBack('bari','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>L'alta Bari Napoli</td><td>Via Nicola Tridente, 29</td><td style="color:green;">●</td><td>pranzo, cena (sabato → cena)</td></tr>
+      <tr><td>Bari Napoli</td><td>Via Nicolò Piccinni, 187/189</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato, domenica → cena)</td></tr>
+      <tr><td>Giotto</td><td>Via Mazzitelli, 178</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena)</td></tr>
+      <tr><td>La Tana</td><td>Via Amendola, 29</td><td style="color:green;">●</td><td>cena</td></tr>
+      <tr><td>Solho</td><td>Via Sparano, 137</td><td style="color:green;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Le Terrazze di Santa Lucia</td><td>Via Sparano, 137</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Da Donato</td><td>Via Lattanzio, 59</td><td style="color:green;">●</td><td>cena (domenica chiuso)</td></tr>
+      <tr><td>Il bugigattolo</td><td>Via Gaetano Salvemini, 97</td><td style="color:transparent;">●</td><td>cena</td></tr>
+      <tr><td>Al buco</td><td>Via Gianbattista Nitto de Rossi, 2/A</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+      <tr><td>Enrico Porzio</td><td>Corso Vittorio Emanuele II, 111</td><td style="color:yellow;">●</td><td>pranzo, cena</td></tr>
+      <tr><td>Pizzotto 1930</td><td>Via di Tullio Vito Nicola, 45</td><td style="color:transparent;">●</td><td>cena</td></tr>
+      <tr><td>Enzo e Ciro</td><td>Via Matteo Renato Imbriani, 79</td><td style="color:transparent;">●</td><td>cena</td></tr>
+      <tr><td>Ristorante Al Raffaello</td><td>Via Principe Amedeo, 222-224</td><td style="color:green;">●</td><td>cena</td></tr>
+      <tr><td>L'officina di Soal</td><td>Via Orfeo Mazzitelli, 256/A</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> cena)</td></tr>
+      <tr><td>Pizza e altro</td><td>Viale Antonio Salandra, 9/A/B</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo)</td></tr>
+      <tr><td>Pizzeria Ristorante Antonio Cassandra</td><td>Via Orfeo Mazzitelli, 188</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì -> cena; lunedì chiuso)</td></tr>
+      <tr><td>D'Abramo Pizzeria</td><td>Via Pier Paolo Pasolini, 3A</td><td style="color:transparent;">●</td><td>cena</td></tr>
+      <tr><td>Pizzeria Cris & Bio</td><td>Via Giuseppe Papalia, 12</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+      <tr><td>Pizzeria Ristorante Da Donato</td><td>Largo di Santo Spirito Cristoforo Colombo, 182/184</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>La Veronique</td><td>Via Luigi Einaudi, 93</td><td style="color:green;">●</td><td>pranzo, cena (sabato → cena)</td></tr>
+    <tr><td>Malto's Beer</td><td>Via Aurelio Carrante, 1/B</td><td style="color:green;">●</td><td>pranzo, cena (sabato, domenica → cena)</td></tr>
+    <tr><td>Canarute</td><td>Via Agostino Ciasca, 5</td><td style="color:green;">●</td><td>cena (domenica → pranzo, cena)</td></tr>
+    <tr><td>Keller</td><td>Via Aurelio Carrante, 21</td><td style="color:green;">●</td><td>cena</td></tr>
+    <tr><td>Time out</td><td>Via Giuseppe Fanelli, 285 C</td><td style="color:yellow ;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>Gallo matto</td><td>Largo Giordano Bruno, 67</td><td style="color:green;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>La Bitta 2</td><td>Via Re Manfredi, 36</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato, domenica → cena)</td></tr>
+    <tr><td>Come Vuoi Pane & Condimenti</td><td>Via Argiro, 10</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena)</td></tr>
+    <tr><td>Taverna del Maltese</td><td>Via Domenico Nicolai, 67</td><td style="color:transparent;">●</td><td>cena</td></tr>
+    <tr><td>Paninomania by Pino</td><td>Via Paolo Borsellino e Giovanni Falcone, 63</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>L'officina di Soal</td><td>Via Orfeo Mazzitelli, 256/A</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> cena)</td></tr>
+    <tr><td>Gulp</td><td>Via Pappacena, 24/A</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato, domenica -> cena)</td></tr>
+    <tr><td>La Ciccia</td><td>Lungomare Cristoforo Colombo, 140</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Le Veronique</td><td>Via Orfeo Mazzitelli, 266</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato → cena)</td></tr>
+    <tr><td>San Francesco all'Arena</td><td>Via Giuseppe Verdi, 59</td><td style="color:green;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>Urban - L'assassineria urbana</td><td>Via Domenico Nicolai, 10</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica chiuso)</td></tr>
+    <tr><td>L'osteria di Mario</td><td>Via Gioacchino Toma, 109</td><td style="color:green;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>Seconda classe</td><td>Via Capruzzi, 15</td><td style="color:transparent;">●</td><td>cena (lunedì, martedì chiuso, domenica → pranzo)</td></tr>
+    <tr><td>Villa dei Sapori</td><td>Corso Alcide de Gasperi, 449</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+    <tr><td>Peppo</td><td>Via Melo, 233</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso, domenica → pranzo)</td></tr>
+    <tr><td>Vent8</td><td>Via Amendola, 122</td><td style="color:green;">●</td><td>pranzo, cena (sabato -> cena)</td></tr>
+    <tr><td>Piccinni 28</td><td>Via Piccinni, 28</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>Ristorante Al Raffaello</td><td>Via Principe Amedeo, 222-224</td><td style="color:green;">●</td><td>pranzo, cena</td><td>braceria-pizzeria</td></tr>
+    <tr><td>Drop</td><td>Corso Vittorio Emanuele II, 79</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+    <tr><td>Weilà</td><td>Via Giovanni Amendola, 145a</td><td style="color:yellow;">●</td><td>pranzo, cena (domenica chiuso)</td></tr>
+    <tr><td>Kela Bistrot</td><td>Piazza Giuseppe Massari, 38</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>La Uascezze</td><td>Corte S.Agostino, 2/3/4</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena)</td></tr>
+    <tr><td>La locanda di Federico</td><td>Piazza Mercantile, 63</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>Al coltello</td><td>Via Salvatore Cognetti, 54</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica chiuso)</td></tr>
+    <tr><td>Le 2 Aquile</td><td>Via Salvatore Cognetti, 53</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+    <tr><td>Radicale Restaurant</td><td>Via Nicolò Putignani, 71</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+    <tr><td>Est! Vineria con cucina enoteca Naturale</td><td>Via Gioacchino Toma, 81/83</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso, domenica → pranzo)</td></tr>
+    <tr><td>Cris & Bio</td><td>Via Giuseppe Papalia, 12</td><td style="color:green;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+    <tr><td>Avoglia - La Bottega di Quartiere</td><td>Via Mauro Amoruso Manzari, 59</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+    <tr><td>Ceralacca</td><td>Via Abbrescia, 95</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+    <tr><td>SENSI Restaurant</td><td>Via Orfeo Mazzitelli, 258 C/D</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato → cena, domenica → pranzo)</td></tr>
+    <tr><td>Le Nicchie</td><td>Vicolo corsioli, 11/b</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+    <tr><td>La Schiscetta</td><td>Via Amendola, 191f</td><td style="color:green;">●</td><td>pranzo (venerdì, sabato → pranzo, cena, domenica chiuso)</td></tr>
+    <tr><td>Mangia Italian Potatoes</td><td>Via Melo, 194</td><td style="color:green;">●</td><td>pranzo, cena</td><td>ristorante - pizzeria</td></tr>
+    <tr><td>L'officina di Soal</td><td>Via Orfeo Mazzitelli, 256/A</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> cena)</td></tr>
+    <tr><td>La Pesciera</td><td>Via De Rossi, 159</td><td style="color:transparent;">●</td><td>pranzo, cena (domanica -> pranzo; lunedì chiuso)</td><td>solo a base di pesce</td></tr>
+    <tr><td>Pizzeria Ristorante Antonio Cassandra</td><td>Via Orfeo Mazzitelli, 188</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì -> cena; lunedì chiuso)</td></tr>
+    <tr><td>Ristorante Biancofiore</td><td>Corso Vittorio Emanuele II, 13</td><td style="color:transparent;">●</td><td>pranzo, cena</td><td>avvisare prima del gf</td></tr>
+    <tr><td>Frulez</td><td>Piazza Umberto I, 14-15</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica chiuso)</td><td></td></tr>
+  </tbody>
+</table>
+
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Magda</td><td>Via Prospero Petroni, 32</td><td style="color:yellow;">●</td><td>7:00 - 20:30 (domenica chiuso)</td></tr>
+<tr><td>Colibrio</td><td>Corso Vittorio Emanuele II, 47</td><td style="color:green;">●</td><td>8:00 - 21:00 (lunedì chiuso, domenica 8:30 - 13:30)</td></tr>
+<tr><td>Patata Shop</td><td>Piazza Mercantile, 34</td><td style="color:yellow;">●</td><td>17:00 - 00/1:00</td></tr>
+<tr><td>Ferdy</td><td>Via de Rossi, 52</td><td style="color:green;">●</td><td>8:30 - 18/16 (domenica chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="aperitivo">
+  <thead>
+    <tr>
+      <th>APERITIVO</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Caffè Vergnano</td><td>Via Giovanni Amendola, 128</td><td style="color:green;">●</td><td>7:00 - 20:00 (chiuso sabato e domenica)</td></tr>
+<tr><td>Muto - Cafè Bistrot</td><td>Via Sparano, 148</td><td style="color:yellow;">●</td><td>8:30 - 23:00</td></tr>
+</tbody>
+</table>
+
+<table class="braceria">
+  <thead>
+    <tr>
+      <th>BRACERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>El churrasco</td><td>Via Guido Dorso, 57</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> cena, domenica chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="internazionale">
+  <thead>
+    <tr>
+      <th>INTERNAZIONALE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La parrilla</td><td>Piazza Mercantile, 21</td><td style="color:green;">●</td><td>pranzo, cena (lunedì chiuso)</td> <td>messicano</td></tr>
+<tr><td>Sushi Kando - sapori d'oriente</td><td>Viale Unità d'Italia, 51</td><td style="color:transparent;">●</td><td>pranzo, cena</td> <td>giapponese</td></tr>
+<tr><td>Sushi Joya</td><td>Lungomare Starita, 56</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì, martedì -> cena)</td> <td>giapponese</td></tr>
+</tbody>
+</table>
+
+<table class="pasticceria">
+  <thead>
+    <tr>
+      <th>PASTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La Gouterie</td><td>Via Vito Fornai, 18</td><td style="color:green;">●</td><td>8:30 - 20:30 (lunedì chiuso, domenica 8:30 - 13:30)</td></tr>
+<tr><td>Perulli</td><td>Via Giovanni Amendola, 195 B/C</td><td style="color:green;">●</td><td>6:30 - 20:00 (martedì chiuso)</td></tr>
+<tr><td>Fuwa</td><td>Via Argiro, 119</td><td style="color:transparent;">●</td><td>10:00 - 21:00</td></tr>
+<tr><td>La briocheria</td><td>Via Salvatore Cognetti, 52</td><td style="color:transparent;">●</td><td>0:00 - 4:00 (sabato, domenica -> 18:00 - 4:00)</td><td>cornetti surgelati</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Caffè Vergnano 2 giugno</td><td>Via della Resistenza, 142</td><td style="color:transparent;">●</td><td>06:30 - 0:00</td></tr>
+<tr><td>Il gelatiere</td><td>Via della Resistenza, 162/164</td><td style="color:transparent;">●</td><td>14:00 - 21:00</td></tr>
+<tr><td>Gasperini</td><td>Corso Cavour, 55</td><td style="color:green;">●</td><td>7:00 - 0:00</td></tr>
+<tr><td>Se ti va</td><td>Via Argiro, 64</td><td style="color:red;">●</td><td>8:00 - 23:00</td></tr>
+<tr><td>Perulli</td><td>Via Giovanni Amendola, 195 B/C</td><td style="color:transparent;">●</td><td>6:30 - 20:00 (martedì chiuso)</td></tr>
+<tr><td>Sandrino</td><td>Piazza Mercantile</td><td style="color:green;">●</td><td>13:00 - 23:00 (domenica 13:00 - 15:00)</td></tr>
+<tr><td>Le terrazze del Santa Lucia</td><td>Lungomare Starita</td><td style="color:green;">●</td><td>8:30 - 21:30 (lunedì chiuso)</td></tr>
+<tr><td>Gelateria Gentile</td><td>Piazza Federico II di Svevia</td><td style="color:transparent;">●</td><td>9:00 - 23:00</td></tr>
+<tr><td>Mamà</td><td>Strada Palazzo di Città, 28</td><td style="color:green;">●</td><td>16:00 - 23:00 (martedì chiuso)</td></tr>
+<tr><td>Piccinni</td><td>Via Niccolò Piccinni, 131</td><td style="color:transparent;">●</td><td>11:00 - 21:00</td></tr>
+<tr><td>Sacro Gusto Gelateria</td><td>Viale Luigi Einaudi, 37</td><td style="color:transparent;">●</td><td>11:00 - 22:00 (venerdì, sabato -> 12:00 – 0:00)</td></tr>
+<tr><td>Yogo</td><td>Corso Vittorio Emanuele II, 9</td><td style="color:transparent;">●</td><td>13:00 - 1:30</td><td>crepes, yougurt, gelati</td></tr>
+<tr><td>Ghiaccio Bollente</td><td>Largo di Santo Spirito Cristoforo Colombo, 20</td><td style="color:transparent;">●</td><td>6:00 – 0:00 (martedì chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="creperia">
+  <thead>
+    <tr>
+      <th>CREPERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Yogo</td><td>Corso Vittorio Emanuele II, 9</td><td style="color:transparent;">●</td><td>13:00 - 1:30</td><td>crepes, yougurt, gelati</td></tr>
+<tr><td>Akc a Krep Crazy</td><td>Via Giovanni Amendola, 91</td><td style="color:green;">●</td><td>19:00 - 3:00</td></tr>
+</tbody>
+</table>
+
+<table class="bar">
+  <thead>
+    <tr>
+      <th>BAR</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Argiro 52</td><td>Via Argiro, 52</td><td style="color:transparent;">●</td><td>8:00 - 0:00</td><td>bistrò</td></tr>
+<tr><td>U Dolge!</td><td>Via Piave, 166</td><td style="color:transparent;">●</td><td>19:00 - 1:00 (lunedì chiuso)</td></tr>
+<tr><td>La Briocheria</td><td>Via Salvatore Cognetti, 52</td><td style="color:transparent;">●</td><td>18:00 - 0:00 (domenica 0:00 - 6:00, lunedì chiuso)</td><td>Cornetti sigillati e cotti al momento</td></tr>
+<tr><td>Asgard cafè Bari</td><td>Via Orfeo Mazzitelli, 110</td><td style="color:transparent;">●</td><td>00:00 – 14:30, 20:00 – 00:00</td></tr>
+<tr><td>Perulli</td><td>Via Giovanni Amendola, 195 B/C</td><td style="color:green;">●</td><td>6:30 - 20:00 (martedì chiuso)</td></tr>
+<tr><td>Oliver</td><td>Corso Benedetto Croce, 183</td><td style="color:transparent;">●</td><td>6:00 - 20:30 (domenica 6:00 - 13:30)</td></tr>
+</tbody>
+</table>
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Essenza glutine</td><td>Via Vincenzo Aulisio, 35</td><td style="color:transparent;">●</td><td>9:00 - 17:00 (sabato, domenica chiuso)</td></tr>
+<tr><td>Colibrio</td><td>Corso Vittorio Emanuele II, 47</td><td style="color:green;">●</td><td>8:00 - 21:00 (lunedì chiuso, domenica 8:30 - 13:30)</td></tr>
+<tr><td>L'isola del caliaco</td><td>Via Prospero Petroni, 39</td><td style="color:green;">●</td><td>9:00 - 13:00, 16:00 - 20:00 (sabato 9:00 - 13:00, domenica chiuso)</td></tr>
+<tr><td>I good</td><td>Via Principe Amedeo, 256</td><td style="color:green;">●</td><td>	08:30 – 13:30, 17:00 – 20:30 (domenica chiuso)</td></tr>
+<tr><td>La Vie Est Belle</td><td>Via Arcidiacono Giovanni, 18/20</td><td style="color:transparent;">●</td><td>	9:30 – 13:00 17:30 – 20:00 (sabato, domenica chiuso)</td></tr>
+<tr><td>Macelleria Pellegrino Francesco</td><td>Corso Vittorio Emanuele, 72</td><td style="color:transparent;">●</td><td>7:30 – 14:00 17:30–20:30</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- CAPURSO -->
+<div id="capurso" style="display:none;">
+  <button onclick="showCittaBack('capurso','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Acqua e Farina</td><td>Via Epifania Federico, 217 A/B</td><td style="color:transparent;">●</td><td></td></tr>
+<tr><td>Ninì</td><td>Via Noicattaro, 44</td><td style="color:green;">●</td><td>cena</td></tr>
+<tr><td>La Locanda da Franco e Giulia</td><td>Via Teodoro Bali, 2</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena, martedì chiuso)</td></tr>
+
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Centoundici</td><td>Via Madonna delle Grazie, 111</td><td style="color:green;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Il Riccio</td><td>Via Casamassima, 36/38</td><td style="color:green;">●</td><td>cena (domenica chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Bruno</td><td>Via Roma, 15</td><td style="color:green;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+  </tbody>
+</table>
+
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>The Coffy</td><td>Via Madonna del Pozzo, 63</td><td style="color:transparent;">●</td><td>9:30 - 13:00, 16:30 - 21:00 (lunedì e domenica 17:00 - 21:00)</td></tr>
+</tbody>
+</table>
+
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>I Good</td><td>Via Torricella, 29</td><td style="color:green;">●</td><td>	08:30 – 13:30, 17:00 – 20:30 (giovedì -> 08:30 – 13:30, domenica chiuso)</td></tr>
+<tr><td>Altro gusto</td><td>Via C. Colombo III Trav. Z.I.</td><td style="color:transparent;">●</td><td>	9:00 - 13:00, 16:00 - 19:30 (sabato 9:00 - 13:00)</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- CASAMASSIMA -->
+<div id="casamassima" style="display:none;">
+  <button onclick="showCittaBack('casamassima','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Antipasteria Pizzeria Davì</td><td>Via Pier Paolo Pasolini, 3A</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Da Angelo - Pizzeria Antipasteria</td><td>Corso Giuseppe Garibaldi, 85</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+      <tr><td>Pizz e poesia</td><td> Via Imbriani, 43</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> cena, lunedì chiuso)</td></tr>
+      <tr><td>Mamma Richetta</td><td> Via Italia, 9</td><td style="color:transparent;">●</td><td>cena (mercoledì chiuso)</td></tr>
+      <tr><td>Antica Santo Stefano</td><td> Via Santo Stefano, 25</td><td style="color:transparent;">●</td><td>cena</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Oiza chicken</td><td>Via Carducci, 50</td><td style="color:green;">●</td><td>cena (lunedì chuiso)</td></tr>
+  </tbody>
+ </table>
+
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La madietta</td><td>Via Turi, 30</td><td style="color:green;">●</td><td>8:30 – 17:30 (domenica -> 9:30 – 13:00, lunedì chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="pasticceria">
+  <thead>
+    <tr>
+      <th>PASTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La madietta</td><td>Via Turi, 30</td><td style="color:green;">●</td><td>8:30 – 17:30 (domenica -> 9:30 – 13:00, lunedì chiuso)</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- CASTELLANA GROTTE -->
+<div id="castellana grotte" style="display:none;">
+  <button onclick="showCittaBack('castellana grotte','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Bella Capri</td><td>Via Giovanni Bovio, 38</td><td style="color:green;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Marian Food & Drink</td><td>Via Putignano, 92 (Al Primo Piano Del Centro Commerciale Grotte)</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Terre di Puglia</td><td>Piazzale Franco Anelli</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+      <tr><td>La Fenice</td><td>Via Michele Latorre, 72</td><td style="color:transparent;">●</td><td>cena (martedì, mercoledì, giovedì chiuso)</td></tr>
+      <tr><td>Taverna Degli Amici</td><td>Via Vito Matarrese, 23</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì -> pranzo)</td></tr> 
+      <tr><td>Pizza&Spaghi</td><td>Via Monopoli, 7</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr> 
+      <tr><td>Pub Pizzeria Antica Roma</td><td>Piazza Caduti Castellanesi, 37/38</td><td style="color:transparent;">●</td><td>cena (domenica chiuso)</td></tr>
+      <tr><td>Bernardo</td><td>Via Conversano, 10</td><td style="color:green;">●</td><td>cena (lunedì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>A-pollo</td><td> Via Giovanni Bovio, 15</td><td style="color:green;">●</td><td>cena (sabato, domenica chiuso)</td></tr>
+    <tr><td>U crepètt Paninoteca</td><td> Via Nicola de Bellis, 13</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+    <tr><td>Pub Pizzeria Antica Roma</td><td> Piazza Caduti Castellanesi, 37/38</td><td style="color:transparent;">●</td><td>cena (domenica chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Trattoria Il Casalicchio</td><td>Via Casalicchio, 22</td><td style="color:green;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+    <tr><td>Ristorante Il Piatto Fumante</td><td>Strada Comunale Foggia D'aniello, 1</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+    <tr><td>Cesarino 36</td><td>Via Conversano, 64</td><td style="color:transparent;">●</td><td>pranzo (lunedì chiuso)</td></tr>
+    <tr><td>Osteria Caroseno</td><td>Via Santomagno, 18</td><td style="color:transparent;">●</td><td>cena (sabato -> pranzo, cena, martedì chiuso)</td></tr>
+  </tbody>
+</table>
+
+<table class="braceria">
+  <thead>
+    <tr>
+      <th>BRACERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+ <tr><td>Non solo carni</td><td>Via Conversano, 110</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì -> pranzo, domenica chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Cerialia prodotti SENZA GLUTINE</td><td> Via Giambattista Vico, 60</td><td style="color:transparent;">●</td><td>9:00 – 13:00, 17:00 – 20:10 (domenica chiuso)</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- CELLAMARE -->
+<div id="cellamare" style="display:none;">
+  <button onclick="showCittaBack('cellamare','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Antico arco</td><td>Via Nicola Tridente, 29</td><td style="color:green;">●</td><td>pranzo, cena (sabato → cena)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- CONVERSANO -->
+<div id="conversano" style="display:none;">
+  <button onclick="showCittaBack('conversano','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>ConTè</td><td>Via Padre Michele Accolti Gil, 66/68</td><td style="color:transparent;">●</td><td>cena (mercoledì chiuso)</td></tr>
+<tr><td>Rosty Pizza 2</td><td>Via Van Gogh, 3</td><td style="color:transparent;">●</td><td>cena</td></tr>
+<tr><td>Spisso - Pizza Chef</td><td>Via Niccolò Macchiavelli, 27</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Terrazza Belvedere</td><td>Corso Domenico Morea</td><td style="color:transparent;">●</td><td>cena (martedì → pranzo)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Fusi</td><td>Via Alessandro Volta, 4</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Ristorante Creperia Gradisca</td><td>Via Palmiro Togliatti, 39</td><td style="color:green;">●</td><td>cena (martedì chiuso, domenica → pranzo, cena)</td></tr>
+<tr><td>Gusti Nuovi Snc</td><td>Via Lorenzo Il Magnifico, 8</td><td style="color:transparent;">●</td><td>pranzo (martedì chiuso)</td><td>prenotare con preavviso per gf</td></tr>
+<tr><td>Savì</td><td>Via San Giacomo 26/30</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td><td>creperia</td></tr>
+<tr><td>Ristorante Vita Pugliese</td><td>Via Ospedale, 15</td><td style="color:transparent;">●</td><td>cena (mercoledì chiuso)</td></tr>
+<tr><td>Sapore Perfetto</td><td>Via S. Giacomo, 11</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena)</td></tr>
+<tr><td>Masseria Santa Chiara</td><td>Strada Vicinale Santa Chiara</td><td style="color:transparent;">●</td><td></td><td>sala ricevimenti</td></tr>
+<tr><td>O Reng</td><td>Via Arringo, 89</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+  </tbody>
+</table>
+
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La Bodeguita Fresco e Senza Glutine</td><td>Via Fratelli Rosselli, 47</td><td style="color:transparent;">●</td><td>8:30 - 13:30, 17:00 - 20:00 (lunedì, domenica chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Caffè dell'Incontro</td><td>Piazza XX Settembre, 2</td><td style="color:transparent;">●</td><td>8:00 - 13:00, 16:00 - 20:00 (mercoledì chiuso)</td><td>spungato, gelato</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- GIOVINAZZO -->
+<div id="giovinazzo" style="display:none;">
+  <button onclick="showCittaBack('giovinazzo','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Al Cantagallo</td><td>Via Molfetta, 18</td><td style="color:green;">●</td><td>cena</td></tr>
+<tr><td>Pizzeria Norcineria Piccolo Borgo Antico By La Rossa</td><td>Via Marina, 12</td><td style="color:transparent;">●</td><td>cena</td></tr>
+<tr><td>Pizzeria Pitta La Piza Col Sorriso Forno a Legna</td><td>Via del Ciuccio, 1</td><td style="color:transparent;">●</td><td>cena</td></tr>
+<tr><td>Pizzeria Mattarella</td><td>Piazza Costantinopoli, 11</td><td style="color:transparent;">●</td><td>cena (domenica → pranzo, cena, mercoledì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Romanazzi's Restaurant</td><td>Cala Porto, 82</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Corte Meraviglia</td><td>Sp. Giovinazzo</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo, martedì e mercoledì chiuso)</td></tr>
+<tr><td>La Cucchiara Trattoria</td><td>Piazza Vittorio Emanuele II, 70</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo, lunedì chiuso)</td></tr>
+<tr><td>Osteria Scvnazz</td><td>Via Fossato, 50/52</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Allamurja</td><td>Via S. Domenico Maggiore, 14/16</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo)</td></tr>
+<tr><td>La Creperia Cinereo Lembo Cafè</td><td>Piazza Francesco Zurlo, 16</td><td style="color:transparent;">●</td><td>cena (lunedì → pranzo, mercoledì chiuso)</td></tr>
+<tr><td>Toruccio Terrazza Adriatica</td><td>Via Giovanni XXIII</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo, lunedì chiuso)</td></tr>
+<tr><td>Amarò Brasserie</td><td>Piazza Duomo, 2/3/4</td><td style="color:transparent;">●</td><td>cena</td></tr>
+<tr><td>Ristorante Pizzeria al Porticciolo</td><td>Lungo Mare Marina Italiana, 38</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+<tr><td>Home Restaurant - Al Pumo Azzurro</td><td>Via Palestro, 24</td><td style="color:transparent;">●</td><td>cena</td></tr>
+  </tbody>
+</table>
+
+<table class="bar">
+  <thead>
+    <tr>
+      <th>BAR</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Argiro 52</td><td>Via Argiro, 52</td><td style="color:transparent;">●</td><td>8:00 - 0:00</td><td>bistrò</td></tr>
+<tr><td>U Dolge!</td><td>Via Piave, 166</td><td style="color:transparent;">●</td><td>19:00 - 1:00 (lunedì chiuso)</td></tr>
+<tr><td>La Briocheria</td><td>Via Salvatore Cognetti, 52</td><td style="color:transparent;">●</td><td>18:00 - 0:00 (domenica 0:00 - 6:00, lunedì chiuso)</td><td>Cornetti sigillati e cotti al momento</td></tr>
+<tr><td>Asgard cafè Bari</td><td>Via Orfeo Mazzitelli, 110</td><td style="color:transparent;">●</td><td>00:00 – 14:30, 20:00 – 00:00</td></tr>
+<tr><td>Perulli</td><td>Via Giovanni Amendola, 195 B/C</td><td style="color:green;">●</td><td>6:30 - 20:00 (martedì chiuso)</td></tr>
+<tr><td>Oliver</td><td>Corso Benedetto Croce, 183</td><td style="color:transparent;">●</td><td>6:00 - 20:30 (domenica 6:00 - 13:30)</td></tr>
+</tbody>
+</table>
+<tr><td>Gavriel Caffè</td><td>Via Don Francesco Piscitelli, 26</td><td style="color:transparent;">●</td><td>6:00 - 21:00</td></tr>
+</div>
+
+<!-- MOLA DI BARI -->
+<div id="mola di bari" style="display:none;">
+  <button onclick="showCittaBack('mola di bari','puglia')">← Torna a Puglia</button>
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Il Pirata Gourmet</td><td>Via Van Westerhout, 42</td><td style="color:transparent;">●</td><td>cena</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>La Lampara</td><td>Via Lungara Porto, 20</td><td style="color:green;">●</td><td></td></tr>
+    <tr><td>Al Bel Paese</td><td>Viale P. Delfino Pesce, 14</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, martedì chiuso)</td></tr>
+    <tr><td>Friggo & Mangi</td><td>Via Cristoforo Colombo, 88</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+    <tr><td>La Rotonda</td><td>Via Colombo, 46</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+    <tr><td>Cine Lumière</td><td>Via Salvo D’acquisto, 15/27</td><td style="color:transparent;">●</td><td>pranzo (sabato, domenica -> pranzo, cena, lunedì chiuso)</td><td>panini, pizze</td></tr>
+  </tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Elite Cafè</td><td>Corso Italia, 40</td><td style="color:transparent;">●</td><td>7:00 – 13:00, 16:00 – 20:00 (sabato -> 7:00 – 13:00, lunedì, domenica chiuso)</td></tr>
+<tr><td>Gran Cafè Moderno</td><td>Piazza XX Settembre</td><td style="color:transparent;">●</td><td>7:00 – 01:30 (mercoledì chiuso)</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- MOLFETTA -->
+<div id="molfetta" style="display:none;">
+  <button onclick="showCittaBack('molfetta','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Quattro Quarti</td><td>Via Giovinazzo, 122</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso, domenica → cena)</td></tr>
+<tr><td>Mezzopieno</td><td>Corso Dante, 106/108</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>I Monelli</td><td>Via Madonna dei Martiri, 108/112</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Kent Burger</td><td>Corso Dante Alighieri, 75</td><td style="color:transparent;">●</td><td>cena</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Dentro le Mura</td><td>Via Dante Alighieri, 42</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì → cena)</td><td>pizzeria - trattoria</td></tr>
+<tr><td>Il Vecchio Gazebo</td><td>Via Guglielmo Marconi, 18/20</td><td style="color:transparent;">●</td><td>cena (mercoledì chiuso)</td></tr>
+<tr><td>Ristorante Adriatico</td><td>S.S. 16 Km 780</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso, domenica → pranzo)</td></tr>
+<tr><td>Quarantagiri - Crepes & Co</td><td>Corso Dante Alighieri, 23</td><td style="color:green;">●</td><td>cena (martedì chiuso, sabato e domenica → pranzo, cena)</td></tr>
+  </tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Gelateria San Marco</td><td>Piazza Giovene</td><td style="color:transparent;">●</td><td>09:30 - 23:00</td></tr>
+<tr><td>Cipriani Ice Drink Coffee and Food</td><td></td><td style="color:transparent;">●</td><td></td></tr>
+</tbody>
+</table>
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>L'isola del Senza Glutine</td><td>Lungomare M. Colonna, 86/88</td><td style="color:transparent;">●</td><td>9:00 - 13:00, 16:30 - 20:30 (sabato → 9:00 - 13:00, domenica chiuso)</td></tr>
+<tr><td>Zero Grano Panificio</td><td>Via Madonna dei Martiri, 35</td><td style="color:transparent;">●</td><td>9:00 - 13:30 (domenica e lunedì chiuso)</td><td>pane, rosticceria, dolci</td></tr>
+<tr><td>Pesheria fish and love</td><td> Via Pio La Torre, 37</td><td style="color:transparent;">●</td><td>7:00 – 13:30, 17:00 – 20:00 (domenica -> 7:00 – 13:30; lunedì chiuso)</td><td>frittura di pesce</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- MONOPOLI -->
+<div id="monopoli" style="display:none;">
+  <button onclick="showCittaBack('monopoli','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+              <tr><td>Chinè</td><td>Corso Pintor Mameli, 7</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena)</td></tr>
+              <tr><td>SIR Special Italian Roots</td><td>Via Cosimo Turi, 1/B</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+            <tr><td>In Piazzetta</td><td>Largo Giuseppe Garibaldi, 15</td><td style="color:transparent;">●</td><td></td></tr>
+            <tr><td>Pinsotti</td><td>Via S. Caterina, 9</td><td style="color:transparent;">●</td><td></td><td>pinsa</td></tr>
+            <tr><td>Apicia</td><td>Via Cappuccini, 1</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+            <tr><td>Ristorante La Mia Terra</td><td>Contrada Impalata, 309</td><td style="color:transparent;">●</td><td>pranzo (mercoledì chiuso; sabato, domenica -> pranzo, cena)</td></tr>
+            <tr><td>Il Ginepro</td><td>C.da Gradone, 244</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+                    <tr><td>Ristorante Piazza Palmieri</td><td>Largo Palmieri, 3</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì -> cena, martedì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+        <tr><td>Vini e panini</td><td>Largo Giuseppe Garibaldi, 34</td><td style="color:transparent;">●</td><td></td><td>chiude d'inverno</td></tr>
+        <tr><td>20m2</td><td>Via Giuseppe Garibaldi, 66</td><td style="color:transparent;">●</td><td>cena</td></tr>
+        <tr><td>Albertone Food Truck</td><td>Via Cosimo Pisonio, 53</td><td style="color:transparent;">●</td><td>cena</td></tr>
+        <tr><td>La Tana del Luppolo</td><td>Via Luigi Cadorna, 10</td><td style="color:transparent;">●</td><td>cena</td><td>pucce, secondi piatti, dolci</td></tr>
+        <tr><td>Pop Burgers</td><td>Via Remigio Ferretti, 83/85</td><td style="color:transparent;">●</td><td>cena (giovedì chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+            <tr><td>La dolce vita</td><td>Piazza Giuseppe Garibaldi, 29</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+            <tr><td>Il Guazzetto</td><td>Via Dell'Erba, 39/41</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, mercoledì chiuso)</td></tr>
+            <tr><td>Lido Bianco</td><td>Via Procaccia, 4</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+            <tr><td>Elia</td><td>Contrada Capitolo, 5</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+            <tr><td>MiCasa</td><td>Via Orazio Comes, 56</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+            <tr><td>Samaré</td><td>Contrada Stomazzelli, 142</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, mercoledì chiuso)</td></tr>
+            <tr><td>In Piazzetta</td><td>Largo Giuseppe Garibaldi, 15</td><td style="color:transparent;">●</td><td></td></tr>
+            <tr><td>Il Quadrifoglio</td><td>Via Giuseppe Garibaldi, 11</td><td style="color:transparent;">●</td><td>cena (sabato, domenica -> pranzo, cena; martedì chiuso)</td></tr>
+            <tr><td>My Wine Il Piacere del Palato</td><td>Via Cavaliere, 9</td><td style="color:transparent;">●</td><td>cena (sabato, domenica -> pranzo, cena; mercoledì chiuso)</td></tr>
+            <tr><td>Metae</td><td>Via dell'Erba, 63</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; martedì chiuso)</td></tr>
+            <tr><td>Condominio 60</td><td>Via Giuseppe Garibaldi, 60</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; lunedì chiuso)</td></tr>
+            <tr><td>Coppino</td><td>Via Giuseppe Garibaldi, 42</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+            <tr><td>Ristorante Piazza Palmieri</td><td>Largo Palmieri, 3</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì -> cena, martedì chiuso)</td></tr>
+            <tr><td>Trattoria San Domenico</td><td>Via San Domenico, 3/7</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+            <tr><td>Il Brigante Trattoria</td><td>Via Cavaliere, 17</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+            <tr><td>Munz Munz biOstrot</td><td>Via Cimino, 33</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì -> cena; martedì chiuso)</td></tr>
+            <tr><td>La Lampara Sui Colli</td><td>Contrada Antonelli, 578</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+            <tr><td>Hostaria De Don Juan</td><td>Via Sallustio, 15</td><td style="color:transparent;">●</td><td>cena (sabato -> pranzo, cena; domenica -> pranzo)</td></tr>
+            <tr><td>Carlo Quinto</td><td>Lungomare Santa Maria, 52</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì, martedì -> pranzo)</td></tr>
+            <tr><td>Pugliami</td><td>Via Garibaldi, 15</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+            <tr><td>La Locanda dei Mercanti</td><td>Via Giuseppe Garibaldi, 44</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso; domenica -> pranzo)</td></tr>
+            <tr><td>Il Cavaliere</td><td>Cda Lamandia, 15</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+            <tr><td>Marechiaro Ristorante</td><td>Via Rocco Scotellaro, 8</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso; domenica -> pranzo)</td></tr>
+            <tr><td>Dono</td><td>Contrada Losciale, 85</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena)</td></tr>
+            <tr><td>Masseria Vagone</td><td>Contrada Vagone, 323</td><td style="color:transparent;">●</td><td>(domenica -> pranzo)</td></tr>
+            <tr><td>Ristorante Oltremare</td><td>Via Fracanzano, 1</td><td style="color:transparent;">●</td><td>panzo, cena (martedì chiuso)</td></tr>
+            <tr><td>Komera, Cucina Nostra</td><td>Via Barbacana, 79</td><td style="color:transparent;">●</td><td>panzo, cena (martedì chiuso)</td></tr>
+            <tr><td>La Torretta del Pescatore</td><td>Via Procaccia, 191</td><td style="color:transparent;">●</td><td>panzo, cena (lunedì, venerdì, sabato, domenica chiuso)</td></tr>
+            <tr><td>Ristorante Gran Pavese</td><td>Contrada Capitolo, 15/c</td><td style="color:transparent;">●</td><td>panzo, cena (domenica -> pranzo)</td></tr>
+
+  </tbody>
+</table>
+
+</tbody>
+</table>
+
+<table class="braceria">
+  <thead>
+    <tr>
+      <th>BRACERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+            <tr><td>Braceria Vecchie Storie</td><td>Contrada Antonelli</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì -> pranzo; domenica chiuso)</td></tr>
+            <tr><td>Aresta La Braceria</td><td>Contrada Passarello, 271</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+</tbody>
+</table>
+
+<table class="internazionale">
+  <thead>
+    <tr>
+      <th>INTERNAZIONALE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+            <tr><td>Hagakure - Fusion e Sushi</td><td>Via Remigio Ferretti</td><td style="color:transparent;">●</td><td>pranzo, cena</td><td>giapponese</td></tr>
+            <tr><td>Hostaria De Don Juan</td><td>Via Sallustio, 15</td><td style="color:transparent;">●</td><td>cena (sabato -> pranzo, cena; domenica -> pranzo)</td><td>spagnola</td></tr>
+            <tr><td>Cime di Tapas</td><td>Corso Umberto I, 8-10</td><td style="color:transparent;">●</td><td>pranzo, cena</td><td>spagnola</td></tr>
+            <tr><td>Nagoya Restaurant Sushi</td><td>Via Luigi Finamore Pepe, 43/45</td><td style="color:transparent;">●</td><td>cena</td><td>giapponese</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Bella Blu Gelateria</td><td>Via Giuseppe Garibaldi, 7/8</td><td style="color:transparent;">●</td><td></td></tr>
+<tr><td>Yogomania</td><td>Via Urbano Rattazzi, 1</td><td style="color:transparent;">●</td><td>17:00 - 2:00</td><td>crepes, pacake, waffle</td></tr>
+
+</tbody>
+</table>
+
+<table class="creperia">
+  <thead>
+    <tr>
+      <th>CREPERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La Crêperie da Gentilezza</td><td>Via Giovanni Barnaba, 3</td><td style="color:transparent;">●</td><td>17:30 - 3:00 (giovedì chiuso)</td></tr>
+<tr><td>Yogomania</td><td>Via Urbano Rattazzi, 1</td><td style="color:transparent;">●</td><td>17:00 - 2:00</td><td>crepes, pacake, waffle</td></tr>
+</tbody>
+</table>
+
+<table class="bar">
+  <thead>
+    <tr>
+      <th>BAR</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+        <tr><td>Dante's Caffetteria</td><td>Via Amleto Pesce, 11/E</td><td style="color:transparent;">●</td><td>9:00 – 20:30</td></tr>
+</tbody>
+</table>
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+        <tr><td>La Puglia senza glutine</td><td>Via Belvedere, 31</td><td style="color:transparent;">●</td><td>9:00 – 13:00, 16:00 – 19:00 (sabato -> 9:00 – 13:00, domenica chiuso)</td></tr>
+        <tr><td>Ámati</td><td> Via Cosimo Pisonio, 41/43</td><td style="color:transparent;">●</td><td>10:00 – 13:00, 17:30 – 20:30 (domenica chiuso)</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- POLIGNANO -->
+<div id="polignano" style="display:none;">
+  <button onclick="showCittaBack('polignano','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>360 Gradi</td><td>Via Papa Giovanni Paolo II, 32</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Il Quadrifoglio</td><td>Via Roma, 33</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Leo's Braci d'Autore</td><td>Via Parco del Lauro, 56/60</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì, mercoledì -> cena)</td></tr>
+<tr><td>Pucceria Number One</td><td>Via Annunziata, 1</td><td style="color:transparent;">●</td><td>pranzo</td></tr>
+<tr><td>Pescaria</td><td>Piazza Aldo Moro, 6/8</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Casa Orecchietta</td><td>Piazza Caduti di V. Fani, 7</td><td style="color:green;">●</td><td>pranzo, cena (giovedì chiuso)</td></tr>
+<tr><td>Ristorante Antiche Mure</td><td>Via Roma, 11</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì chiuso)</td></tr>
+<tr><td>Specchia Sant'Oronzo</td><td>Via San Francesco D'Assisi</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena)</td></tr>
+<tr><td>Cucina di Ventura</td><td>Via Martiri di Dogali, 69</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì chiuso)</td></tr>
+<tr><td>Terrazze Monachile</td><td>Vicolo Cala Porto, 11</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Osteria di Chichibio</td><td>Largo Gelso, 6</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, lunedì chiuso)</td></tr>
+<tr><td>Osteria Piga</td><td>Via Don Lorenzo Milani, 21 Largo Gelso</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì -> cena)</td></tr>
+<tr><td>Villa degli Aranci</td><td>Via Caduti di tutte le guerre, 5/7</td><td style="color:transparent;">●</td><td></td></tr>
+<tr><td>Ruz - Cucina Confidenziale</td><td>Via Roma, 75</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+<tr><td>Frà Crudi e Cotti</td><td>Via Palmiro Togliatti, 2</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, martedì chiuso)</td></tr>
+<tr><td>La Locanda Porta Picc</td><td>Via Anemone, 34/36</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Il Sagittario</td><td>Via Provinciale Castellana, 24</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, martedì chiuso)</td></tr>
+<tr><td>Graecalis</td><td>S.S. 16 Km 839,550</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì, martedì, mercoledì chiuso)</td></tr>
+<tr><td>Antica Trattoria Comes Dak 1926</td><td>Via Pompeo Sarnelli, 14</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+<tr><td>Osteria dei Mulini</td><td>Via Mulini 2 Centro Storico</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+<tr><td>L'Archibugio</td><td>Piazzetto Fulvio Miani Perotti, 14</td><td style="color:transparent;">●</td><td>pranzo, cena (giovedì chiuso)</td></tr>
+<tr><td>Morus Ristorante</td><td>Via Largo Gelso, 12</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Le Muse e Il Mare</td><td>Via Roma, 33</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Grotta Ardito</td><td>Via Grotte Ardito, 11</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Casa Mia Trattoria</td><td>Piazza Giuseppe Garibaldi, 38</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Ristorante Casale dei Fornici</td><td>Contrada Pane e Acqua</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Il Covo dei Saraceni</td><td>Via Conversano 1-1/A</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+  </tbody>
+</table>
+
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>La Rotellina</td><td>Via S. Vito, 5</td><td style="color:transparent;">●</td><td>10:00 - 0:00</td><td>panzerotti</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Iuppi per Tutti</td><td>Via Martiri di Dogali, 62</td><td style="color:transparent;">●</td><td>chiuso d'inverno</td></tr>
+<tr><td>Bella Blu</td><td>Via Martiri di Dogali, 20</td><td style="color:transparent;">●</td><td>8:00 - 3:30</td></tr>
+</tbody>
+</table>
+
+<table class="bar">
+  <thead>
+    <tr>
+      <th>BAR</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>L'Officina del Caffè</td><td>Viale Trieste, 64</td><td style="color:transparent;">●</td><td>6:00 - 20:00 (domenica chiuso)</td></tr>
+<tr><td>Irvi's</td><td>Via Martiri di Dogali, 44</td><td style="color:transparent;">●</td><td>5:30 – 1:30</td><td>Cornetti, pasticciotti, bomboloni, gelato</td></tr>
+<tr><td>Joya Canti di Stagione</td><td>Piazza Vittorio Emanuele II, 11</td><td style="color:transparent;">●</td><td>9:15 – 22:00</td><td>Yogurt, gelato, frutteria, crepes</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- PUTIGNANO -->
+<div id="putignano" style="display:none;">
+  <button onclick="showCittaBack('putignano','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr><td>Premiata Pizzeria</td><td>San Lorenzo, 1</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+     <tr><td>Combà Pizzeria</td><td>Via Camillo Benso Conte di Cavour, 10</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+     <tr><td>Il ghiottone</td><td>Via Roma, 30</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+     <tr><td>Acquolina sulla bocca di tutti</td><td>Via Carlo Rosselli, 32</td><td style="color:transparent;">●</td><td>cena</td></tr>
+    </tbody>
+  </table>
+    
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Scinuà</td><td>Via Santa Lucia, 18 - Centro Storico</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato e domenica chiuso)</td></tr>
+    <tr><td>Angelo Sabatelli Ristorante</td><td>Via Santa Chiara, 1</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td><td>stella Michelin</td></tr>
+    <tr><td>Masseria Foggiagrande</td><td>Strada Comunale Foggia Grande, 1</td><td style="color:transparent;">●</td><td></td><td>agriturismo</td></tr>
+    <tr><td>Botteghe Antiche</td><td>Piazza Plebiscito, 8</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo)</td></tr>
+    <tr><td>Masseria Spartaglio</td><td>Strada Comunale Spartaglio, 3</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo, lunedì chiuso)</td></tr>
+    <tr><td>Crisalide Bistrò</td><td>Via Cairoli, 11-15-17</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica → pranzo, lunedì chiuso)</td></tr>
+    <tr><td>Mammamè</td><td>Via Dante Alighieri, 36</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+  </tbody>
+</table>
+
+ <table class="rosticceria">
+  <thead>
+    <tr>
+      <th>ROSTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Karipiè</td><td>Via Roma, 46</td><td style="color:transparent;">●</td><td>6:00 – 14:00, 17:00 – 20:30 (sabato, domenica, lunedì 6:00 – 14:00)</td><td>panificio</td></tr>
+<tr><td>L'angolo delle bontà</td><td>Viale Cavalieri di Malta, 76/78</td><td style="color:transparent;">●</td><td>6:30 - 14:00, 16:30 - 21:00 (domenica chiuso)</td><td>panini, piadine, taralli, friselle</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Gelateria Frescolatte</td><td>Corso Umberto I, 42</td><td style="color:transparent;">●</td><td>10:30 - 13:30, 15:30 - 0:00</td></tr>
+</tbody>
+</table>
+
+<table class="bar">
+  <thead>
+    <tr>
+      <th>BAR</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+     <tr><td>Caffè Verdi</td><td>Via G. Verdi, 11</td><td style="color:transparent;">●</td><td></td></tr>
+
+</tbody>
+</table>
+
+<table class="alimentari">
+  <thead>
+    <tr>
+      <th>ALIMENTARI</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Gustosì</td><td>Via XXIV Maggio, 5</td><td style="color:transparent;">●</td><td></td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- TORRE A MARE -->
+<div id="torre a mare" style="display:none;">
+  <button onclick="showCittaBack('torre a mare','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Quanto Basta Pizzeria</td><td>Via Monte Grappa, 17</td><td style="color:transparent;">●</td><td>cena (sabato, domenica -> pranzo, cena, lunedì chiuso)</td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr><td>Gemavvi - Norcineria Bauguetteria</td><td>Piazza della Torre, 56</td><td style="color:green;">●</td><td>pranzo, cena (lunedì chiuso)</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Taverna Bio le Rune</td><td>Larco Giacomo Leopardi, 7</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato -> pranzo)</td></tr>
+
+  </tbody>
+</table>
+
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Las Vegas</td><td>Piazza Vittorio Veneto, 3</td><td style="color:yellow;">●</td><td>7:00 – 22:00</td></tr>
+<tr><td>U Gelatier</td><td>Viale Grotta della Regina, 34</td><td style="color:green;">●</td><td>chiuso d'inverno</td></tr>
+<tr><td>Miramare</td><td>Via Giacomo Leopardi, 54</td><td style="color:green;">●</td><td>6:00 – 23:55 (mercoledì chiuso)</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<!-- TRANI -->
+<div id="trani" style="display:none;">
+  <button onclick="showCittaBack('trani','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Pizzeria Galileo</td><td>Via Galileo Galilei, 1</td><td style="color:transparent;">●</td><td>cena</td></tr>
+<tr><td>Donna Rosa</td><td>Corso Vittorio Emanuele, 138</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Bovio</td><td>Via Bebio, 59</td><td style="color:transparent;">●</td><td></td></tr>
+<tr><td>Civico N. 10</td><td>Via Giuseppe De Robertis, 10</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>La Bodeguita</td><td>Via Zanardelli, 27</td><td style="color:transparent;">●</td><td></td></tr>
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr><td>Re Artù</td><td>Piazza Cesare Battisti, 3</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+<tr><td>Wells Fargo Saloon</td><td>Via Avvocato Vittorio Malcangi, 278</td><td style="color:transparent;">●</td><td>cena</td></tr>
+<tr><td>Paninart</td><td>Via Statuti Marittimi, 80</td><td style="color:green;">●</td><td>pranzo, cena</td></tr>
+<tr><td>Peschef</td><td>Via Statuti Marittimi, 56</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Osteria Veronique</td><td>Via Giustina Rocca, 9</td><td style="color:transparent;">●</td><td>cena (sabato -> pranzo, cena, domenica -> cena; lunedì chiuso)</td></tr>
+<tr><td>Ristorante Fefino</td><td>Via Mario Pagano, 176/178</td><td style="color:transparent;">●</td><td>cena (sabato -> pranzo, cena, domenica -> cena; lunedì, martedì, mercoledì chiuso)</td></tr>
+<tr><td>Corteinfiore Ristorante</td><td>Via Ognissanti, 18</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, lunedì chiuso)</td></tr>
+<tr><td>Regia Ristorante</td><td>Via M. Reginaldo Maria Addazi, 2</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, lunedì -> cena)</td></tr>
+<tr><td>Diavoletto Epicureo</td><td>Via D. Alvarez, 17</td><td style="color:transparent;">●</td><td>cena (sabato, domenica -> pranzo, cena; mercoledì chiuso)</td></tr>
+<tr><td>Pescandalo</td><td>Piazza Plebiscito, 6</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo, lunedì chiuso)</td></tr>
+<tr><td>Gallo Restaurant</td><td>Via Statuti Marittimi, 48/50</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo)</td></tr>
+<tr><td>Ristorante il Monastero</td><td>Lungomare Cristofoto Colombo, 72</td><td style="color:transparent;">●</td><td></td></tr>
+<tr><td>Beltrani 29</td><td>Via Giovanni Beltrami, 29</td><td style="color:transparent;">●</td><td></td></tr>
+<tr><td>Villa Ascosa</td><td>Piazzale S. Maria di Colonna, 4</td><td style="color:transparent;">●</td><td>h24</td><td>hotel</td></tr>
+<tr><td>Pesto di Pistacchio</td><td>Via Giambettista Tiepolo, 11</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì -> cena, lunedì chiuso)</td></tr>
+<tr><td>Il Melograno</td><td>Via Giovanni Bovio, 189</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
+<tr><td>Il Monastero</td><td>Via Zara, 7</td><td style="color:transparent;">●</td><td></td></tr>
+  </tbody>
+</table>
+
+<table class="pasticceria">
+  <thead>
+    <tr>
+      <th>PASTICCERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Pasticceria Creme Caramel Di Palumbo V. & C. Sas</td><td>Via Palmiro Togliatti, 7/9</td><td style="color:transparent;">●</td><td>7:00 – 13:00, 18:00 –21:00 (martedì -> 18:00 –21:00, domenica -> 7:00 – 13:00)</td></tr>
+<tr><td>L'officina del gusto</td><td>Corso Matteo Renato Imbriani, 231</td><td style="color:transparent;">●</td><td>5:30 – 0:00</td></tr>
+</tbody>
+</table>
+
+<table class="gelateria">
+  <thead>
+    <tr>
+      <th>GELATERIA</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>Tutto Amore</td><td>Via Giovanni Bovio, 131</td><td style="color:transparent;">●</td><td>10:30 – 14:00, 15:30 – 1:00 (mercoledì chiuso)</td></tr>
+</table>
+
+</div>
+
+<!-- VALENZANO -->
+<div id="valenzano" style="display:none;">
+  <button onclick="showCittaBack('valenzano','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Al tempo giusto</td><td>Largo Plebiscito, 15</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Pizzeria Antipasteria Giomè</td><td>Largo Plebiscito, 93</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+/* Funzione chiamata dal pulsante "← Torna agli stati" dentro la sezione regioni */
+function showStatesBack() {
+  document.getElementById('regioni').style.display = 'none';
+  document.getElementById('stati').style.display = 'block';
+  document.getElementById('puglia').style.display = 'none';
+
+  // Ripristina titolo principale
+  document.getElementById('titolo').textContent = 'LOCALI SENZA GLUTINE';
+}
+
+/* Mostra la singola regione (es. "puglia" o "Abruzzo") */
+function showStates() {
+  document.getElementById('stati').style.display = 'none';
+  document.getElementById('regioni').style.display = 'none';
+  document.getElementById('puglia').style.display = 'block';
+
+  // Aggiorna titolo con nome della regione (es. Puglia)
+  document.getElementById('titolo').textContent = 'Puglia';
+}
+
+function showRegions() {
+  document.getElementById('stati').style.display = 'none';
+  document.getElementById('regioni').style.display = 'block';
+  document.getElementById('puglia').style.display = 'none';
+
+  // Aggiorna titolo con nome dello stato (es. Italia)
+  document.getElementById('titolo').textContent = 'Italia';
+}
+
+function showCitta(regioneId) {
+  document.getElementById('regioni').style.display = 'none';
+  document.getElementById(regioneId).style.display = 'block';
+
+  // Aggiorna titolo con nome della regione selezionata
+  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  document.getElementById('titolo').textContent = regioneNome;
+}
+
+function showLocali(cittaId, regioneId) {
+  document.getElementById(regioneId).style.display = 'none';
+  document.getElementById(cittaId).style.display = 'block';
+
+  // Aggiorna titolo con nome della città selezionata
+  const cittaNome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
+  document.getElementById('titolo').textContent = cittaNome;
+}
+
+function showRegionsBack(regioneId) {
+  document.getElementById(regioneId).style.display = 'none';
+  document.getElementById('regioni').style.display = 'block';
+
+  // Torna al titolo "Italia"
+  document.getElementById('titolo').textContent = 'Italia';
+}
+
+function showCittaBack(cittaId, regioneId) {
+  document.getElementById(cittaId).style.display = 'none';
+  document.getElementById(regioneId).style.display = 'block';
+
+  // Torna al titolo con nome della regione
+  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  document.getElementById('titolo').textContent = regioneNome;
+}
+
+</script>
+</html>
