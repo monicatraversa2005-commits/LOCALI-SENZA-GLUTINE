@@ -321,6 +321,7 @@ table td:not(:first-child) {
   <a href="#" class="link-italia" onclick="showLocali('altamura','puglia')">Altamura</a>
   <a href="#" class="link-italia" onclick="showLocali('andria','puglia')">Andria</a>
   <a href="#" class="link-italia" onclick="showLocali('bari','puglia')">Bari</a>
+  <a href="#" class="link-italia" onclick="showLocali('bitetto','puglia')">Bitetto</a>
   <a href="#" class="link-italia" onclick="showLocali('bitritto','puglia')">Bitritto</a>
   <a href="#" class="link-italia" onclick="showLocali('capurso','puglia')">Capurso</a>
   <a href="#" class="link-italia" onclick="showLocali('casamassima','puglia')">Casamassima</a>
@@ -329,6 +330,7 @@ table td:not(:first-child) {
   <a href="#" class="link-italia" onclick="showLocali('conversano','puglia')">Conversano</a>
   <a href="#" class="link-italia" onclick="showLocali('foggia','puglia')">Foggia</a>
   <a href="#" class="link-italia" onclick="showLocali('giovinazzo','puglia')">Giovinazzo</a>
+  <a href="#" class="link-italia" onclick="showLocali('modugno','puglia')">Modugno</a>
   <a href="#" class="link-italia" onclick="showLocali('mola di bari','puglia')">Mola di Bari</a>
   <a href="#" class="link-italia" onclick="showLocali('molfetta','puglia')">Molfetta</a>
   <a href="#" class="link-italia" onclick="showLocali('monopoli','puglia')">Monopoli</a>
@@ -1028,6 +1030,8 @@ z
 <tr><td>La parrilla</td><td>Piazza Mercantile, 21</td><td style="color:green;">●</td><td>pranzo, cena (lunedì chiuso)</td> <td>messicano</td></tr>
 <tr><td>Sushi Kando - sapori d'oriente</td><td>Viale Unità d'Italia, 51</td><td style="color:transparent;">●</td><td>pranzo, cena</td> <td>giapponese</td></tr>
 <tr><td>Sushi Joya</td><td>Lungomare Starita, 56</td><td style="color:transparent;">●</td><td>pranzo, cena (lunedì, martedì -> cena)</td> <td>giapponese</td></tr>
+<tr><td>My Poke</td><td>Via Prospero Petroni, 42</td><td style="color:transparent;">●</td><td>pranzo, cena</td> <td>giapponese</td></tr>
+
 </tbody>
 </table>
 
@@ -1062,6 +1066,7 @@ z
   <tbody>
 <tr><td>Caffè Vergnano 2 giugno</td><td>Via della Resistenza, 142</td><td style="color:transparent;">●</td><td>06:30 - 0:00</td></tr>
 <tr><td>Il gelatiere</td><td>Via della Resistenza, 162/164</td><td style="color:transparent;">●</td><td>14:00 - 21:00</td></tr>
+<tr><td>Il gelatiere</td><td>Viale Antonio Salandra, 25a</td><td style="color:transparent;">●</td><td>10:00 - 23:00 (lunedì chiuso)</td></tr>
 <tr><td>Gasperini</td><td>Corso Cavour, 55</td><td style="color:green;">●</td><td>7:00 - 0:00</td></tr>
 <tr><td>Se ti va</td><td>Via Argiro, 64</td><td style="color:red;">●</td><td>8:00 - 23:00</td></tr>
 <tr><td>Perulli</td><td>Via Giovanni Amendola, 195 B/C</td><td style="color:transparent;">●</td><td>6:30 - 20:00 (martedì chiuso)</td></tr>
@@ -1151,9 +1156,9 @@ z
 </table>
 </div>
 
-<!-- BITRITTO -->
-<div id="adelfia" style="display:none;">
-  <button onclick="showCittaBack('adelfia','puglia')">← Torna a Puglia</button>
+<!-- BITETTO -->
+<div id="bitetto" style="display:none;">
+  <button onclick="showCittaBack('bitetto','puglia')">← Torna a Puglia</button>
   <table class="pizzeria">
     <thead>
       <tr>
@@ -1165,25 +1170,10 @@ z
       </tr>
     </thead>
     <tbody>
-      <tr><td>Petit Roi</td><td>Via Giuseppe Mazzini, 34</td><td style="color:transparent;">●</td><td>cena (domenica chiuso)</td></tr>
-      
+            <tr><td>Le Cinque Stagioni</td><td>Via Giuseppe De Gennaro, 22</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+
     </tbody>
   </table>
-
- <table class="pub">
-  <thead>
-    <tr>
-      <th>PUB</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-    
-  </tbody>
- </table>
 
   <table class="ristoranti">
   <thead>
@@ -1196,53 +1186,10 @@ z
     </tr>
   </thead>
   <tbody>
-    
+                <tr><td>Dorotea La Spaghetteria</td><td>Via Andrea Costa, 21/A</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+                <tr><td>Masseria Del Barone</td><td>Contrada Poggio Vivo, Km 2</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo,cena)</td></tr>
+
   </tbody>
-</table>
-
- <table class="rosticceria">
-  <thead>
-    <tr>
-      <th>ROSTICCERIA</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-
-</tbody>
-</table>
-
-<table class="aperitivo">
-  <thead>
-    <tr>
-      <th>APERITIVO</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-
-</tbody>
-</table>
-
-<table class="braceria">
-  <thead>
-    <tr>
-      <th>BRACERIA</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-
-</tbody>
 </table>
 
 <table class="internazionale">
@@ -1256,85 +1203,34 @@ z
     </tr>
   </thead>
   <tbody>
+      <tr><td>Daniel's sushi</td><td> Via Beato Giacomo, 72</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td><td>giapponese</td></tr>
 
 </tbody>
 </table>
 
-<table class="pasticceria">
-  <thead>
-    <tr>
-      <th>PASTICCERIA</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
+</div>
 
-</tbody>
-</table>
+<!-- BITRITTO -->
+<div id="bitritto" style="display:none;">
+  <button onclick="showCittaBack('bitritto','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Petit Roi</td><td>Via Giuseppe Mazzini, 34</td><td style="color:transparent;">●</td><td>cena (domenica chiuso)</td></tr>
+      <tr><td>Al Casale</td><td>Via John Fitzgerald Kennedy, 85</td><td style="color:transparent;">●</td><td>cena (lunedì chiuso)</td></tr>
+      <tr><td>Pizzeria E Antipasteria L' Angoletto</td><td>Via Xxiv Maggio, 8</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; martedì chiuso)</td></tr>
 
-<table class="gelateria">
-  <thead>
-    <tr>
-      <th>GELATERIA</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
+    </tbody>
+  </table>
 
-</tbody>
-</table>
-
-<table class="creperia">
-  <thead>
-    <tr>
-      <th>CREPERIA</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-
-</tbody>
-</table>
-
-
-<table class="bar">
-  <thead>
-    <tr>
-      <th>BAR</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-
-</tbody>
-</table>
-
-<table class="alimentari">
-  <thead>
-    <tr>
-      <th>ALIMENTARI</th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-
-</tbody>
-</table>
 </div>
 
 <!-- CAPURSO -->
@@ -1959,6 +1855,80 @@ z
 </tbody>
 </table>
 <tr><td>Gavriel Caffè</td><td>Via Don Francesco Piscitelli, 26</td><td style="color:transparent;">●</td><td>6:00 - 21:00</td></tr>
+</div>
+
+<!-- MODUGNO -->
+<div id="modugno" style="display:none;">
+  <button onclick="showCittaBack('modugno','puglia')">← Torna a Puglia</button>
+  <table class="pizzeria">
+    <thead>
+      <tr>
+        <th>PIZZERIA</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+       <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Ristorante De Amicis</td><td>Piazza de Amicis, 9 via Piave</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; martedì chiuso)</td></tr>
+                <tr><td>Ristorante La Pettegola</td><td>Via Cairoli, 62</td><td style="color:transparent;">●</td><td>cena</td></tr>
+
+    </tbody>
+  </table>
+
+ <table class="pub">
+  <thead>
+    <tr>
+      <th>PUB</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+ </table>
+
+  <table class="ristoranti">
+  <thead>
+    <tr>
+      <th>RISTORANTE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+          <tr><td>Ristorante De Amicis</td><td>Piazza de Amicis, 9 via Piave</td><td style="color:transparent;">●</td><td>cena (domenica -> pranzo, cena; martedì chiuso)</td></tr>
+          <tr><td>Cic'R Sfritt Osteria</td><td>Corso Vittorio Emanuele, 39</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì chiuso)</td></tr>
+          <tr><td>Il Grottino</td><td>Via Conte Rocco Stella, 23 A</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica -> pranzo; lunedì, sabato chiuso)</td></tr>
+          <tr><td>Ristorante La Pettegola</td><td>Via Cairoli, 62</td><td style="color:transparent;">●</td><td>cena</td></tr>
+          <tr><td>Grand Bistrot</td><td>Via X Marzo, 82</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+          <tr><td>Mamma Titta Osteria Contemporanea</td><td>Via Porta Del Forno, 9 A</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
+
+  </tbody>
+</table>
+
+<table class="internazionale">
+  <thead>
+    <tr>
+      <th>INTERNAZIONALE</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+          <tr><td>Kokoi Sushi Restaurant - Sushi, Poke & Cocktail</td><td>Piazza Sedile, 36</td><td style="color:transparent;">●</td><td>pranzo, cena</td><td>giapponese</td></tr>
+
+</tbody>
+</table>
+
 </div>
 
 <!-- MOLA DI BARI -->
