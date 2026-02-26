@@ -3464,28 +3464,27 @@ z
 </tbody>
 </table>
 </div>
-
 <script>
-// Questa funzione nasconde TUTTE le sezioni tranne quella che vogliamo vedere
+/**
+ * FUNZIONE UNIVERSALE
+ * Nasconde tutto ciò che ha classe 'sezione-pagina' e mostra solo l'ID scelto.
+ */
 function gestisciPagine(idDaMostrare, titolo) {
-  // 1. Lista di tutte le sezioni principali che hai nel sito
-  const sezioni = ['stati', 'regioni', 'puglia', 'umbria', 'abruzzo', 'piemonte']; 
-
-  // 2. Ciclo che le nasconde tutte
-  sezioni.forEach(id => {
-    const elemento = document.getElementById(id);
-    if (elemento) elemento.style.display = 'none';
+  // Trova in automatico tutti i div con quella classe
+  const sezioni = document.querySelectorAll('.sezione-pagina');
+  
+  sezioni.forEach(sezione => {
+    sezione.style.display = 'none';
   });
 
-  // 3. Mostra solo quella che serve
   const target = document.getElementById(idDaMostrare);
-  if (target) target.style.display = 'block';
-
-  // 4. Cambia il titolo
-  if (titolo) document.getElementById('titolo').textContent = titolo;
+  if (target) {
+    target.style.display = 'block';
+    if (titolo) document.getElementById('titolo').textContent = titolo;
+  }
 }
 
-// --- FUNZIONI SEMPLIFICATE ---
+// --- NAVIGAZIONE ---
 
 function showStatesBack() {
   gestisciPagine('stati', 'LOCALI SENZA GLUTINE');
@@ -3495,41 +3494,25 @@ function showRegions() {
   gestisciPagine('regioni', 'Italia');
 }
 
- function showCitta(regioneId) {
-  document.getElementById('regioni').style.display = 'none';
-  document.getElementById(regioneId).style.display = 'block';
-
-  // Aggiorna titolo con nome della regione selezionata
- const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  document.getElementById('titolo').textContent = regioneNome;
+function showCitta(regioneId) {
+  const nome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  gestisciPagine(regioneId, nome);
 }
 
-function showLocali(cittaId, regioneId) {
-  document.getElementById(regioneId).style.display = 'none';
-  document.getElementById(cittaId).style.display = 'block';
-
-  // Aggiorna titolo con nome della città selezionata
-  const cittaNome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
-  document.getElementById('titolo').textContent = cittaNome;
+function showLocali(cittaId) {
+  const nome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
+  gestisciPagine(cittaId, nome);
 }
 
-function showRegionsBack(regioneId) {
-  document.getElementById(regioneId).style.display = 'none';
-  document.getElementById('regioni').style.display = 'block';
+// --- TASTI TORNA INDIETRO (Semplificati) ---
 
-  // Torna al titolo "Italia"
-  document.getElementById('titolo').textContent = 'Italia';
+function showRegionsBack() {
+  showRegions();
 }
 
-function showCittaBack(cittaId, regioneId) {
-  document.getElementById(cittaId).style.display = 'none';
-  document.getElementById(regioneId).style.display = 'block';
-
-  // Torna al titolo con nome della regione
-  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  document.getElementById('titolo').textContent = regioneNome;
+function showCittaBack(regioneId) {
+  showCitta(regioneId);
 }
 </script>
-
 
 </html>
