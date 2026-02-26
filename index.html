@@ -3291,70 +3291,45 @@ z
 
 
 
-<script>
-/* Funzione chiamata dal pulsante "← Torna agli stati" dentro la sezione regioni */
-function showStatesBack() {
-  document.getElementById('regioni').style.display = 'none';
-  document.getElementById('stati').style.display = 'block';
-  document.getElementById('puglia').style.display = 'none';
 
-  // Ripristina titolo principale
-  document.getElementById('titolo').textContent = 'LOCALI SENZA GLUTINE';
+<script>
+// Questa funzione nasconde TUTTE le sezioni tranne quella che vogliamo vedere
+function gestisciPagine(idDaMostrare, titolo) {
+  // 1. Lista di tutte le sezioni principali che hai nel sito
+  const sezioni = ['stati', 'regioni', 'puglia', 'umbria', 'abruzzo']; 
+
+  // 2. Ciclo che le nasconde tutte
+  sezioni.forEach(id => {
+    const elemento = document.getElementById(id);
+    if (elemento) elemento.style.display = 'none';
+  });
+
+  // 3. Mostra solo quella che serve
+  const target = document.getElementById(idDaMostrare);
+  if (target) target.style.display = 'block';
+
+  // 4. Cambia il titolo
+  if (titolo) document.getElementById('titolo').textContent = titolo;
 }
 
-/* Mostra la singola regione (es. "puglia" o "Abruzzo") */
-function showStates() {
-  document.getElementById('stati').style.display = 'none';
-  document.getElementById('regioni').style.display = 'none';
-  document.getElementById('puglia').style.display = 'block';
+// --- FUNZIONI SEMPLIFICATE ---
 
-  // Aggiorna titolo con nome della regione (es. Puglia)
-  document.getElementById('titolo').textContent = 'Puglia';
+function showStatesBack() {
+  gestisciPagine('stati', 'LOCALI SENZA GLUTINE');
 }
 
 function showRegions() {
-  document.getElementById('stati').style.display = 'none';
-  document.getElementById('regioni').style.display = 'block';
-  document.getElementById('puglia').style.display = 'none';
-
-  // Aggiorna titolo con nome dello stato (es. Italia)
-  document.getElementById('titolo').textContent = 'Italia';
+  gestisciPagine('regioni', 'Italia');
 }
 
 function showCitta(regioneId) {
-  document.getElementById('regioni').style.display = 'none';
-  document.getElementById(regioneId).style.display = 'block';
-
-  // Aggiorna titolo con nome della regione selezionata
-  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  document.getElementById('titolo').textContent = regioneNome;
+  // Prende l'ID (es. 'umbria') e mette la prima lettera maiuscola per il titolo
+  const nomeMaiuscolo = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  gestisciPagine(regioneId, nomeMaiuscolo);
 }
 
-function showLocali(cittaId, regioneId) {
-  document.getElementById(regioneId).style.display = 'none';
-  document.getElementById(cittaId).style.display = 'block';
-
-  // Aggiorna titolo con nome della città selezionata
-  const cittaNome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
-  document.getElementById('titolo').textContent = cittaNome;
+function showRegionsBack() {
+  showRegions();
 }
-
-function showRegionsBack(regioneId) {
-  document.getElementById(regioneId).style.display = 'none';
-  document.getElementById('regioni').style.display = 'block';
-
-  // Torna al titolo "Italia"
-  document.getElementById('titolo').textContent = 'Italia';
-}
-
-function showCittaBack(cittaId, regioneId) {
-  document.getElementById(cittaId).style.display = 'none';
-  document.getElementById(regioneId).style.display = 'block';
-
-  // Torna al titolo con nome della regione
-  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  document.getElementById('titolo').textContent = regioneNome;
-}
-
 </script>
 </html>
