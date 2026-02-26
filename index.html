@@ -3496,15 +3496,20 @@ function showRegions() {
 }
 
 function showCitta(regioneId) {
-  // Prende l'ID (es. 'umbria') e mette la prima lettera maiuscola per il titolo
-  const nomeMaiuscolo = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  gestisciPagine(regioneId, nomeMaiuscolo);
-}
 
-function showRegionsBack() {
-  showRegions();
-}
+  document.getElementById('regioni').style.display = 'none';
 
+  document.getElementById(regioneId).style.display = 'block';
+
+
+
+  // Aggiorna titolo con nome della regione selezionata
+
+  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+
+  document.getElementById('titolo').textContent = regioneNome;
+
+}
 function showLocali(cittaId, regioneId) {
 
   document.getElementById(regioneId).style.display = 'none';
@@ -3520,5 +3525,10 @@ function showLocali(cittaId, regioneId) {
   document.getElementById('titolo').textContent = cittaNome;
 
 }
+
+function showRegionsBack() {
+  showRegions();
+}
+
 </script>
 </html>
