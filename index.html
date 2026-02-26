@@ -3526,9 +3526,11 @@ function showLocali(cittaId, regioneId) {
 
 }
 
-function showRegionsBack() {
-  showRegions();
-}
+function showRegionsBack(regioneId) {
+
+  document.getElementById(regioneId).style.display = 'none';
+
+  document.getElementById('regioni').style.display = 'block';}
 
 </script>
 </html>
