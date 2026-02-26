@@ -3495,42 +3495,41 @@ function showRegions() {
   gestisciPagine('regioni', 'Italia');
 }
 
-function showCitta(regioneId) {
+ function showCitta(regioneId) {
+  document.getElementById('regioni').style.display = 'none';
+  document.getElementById(regioneId).style.display = 'block';
 
-  document.getElementById('regioni').style.display = 'none';
-
-  document.getElementById(regioneId).style.display = 'block';
-
-
-
-  // Aggiorna titolo con nome della regione selezionata
-
-  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-
-  document.getElementById('titolo').textContent = regioneNome;
-
+  // Aggiorna titolo con nome della regione selezionata
+ const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  document.getElementById('titolo').textContent = regioneNome;
 }
+
 function showLocali(cittaId, regioneId) {
+  document.getElementById(regioneId).style.display = 'none';
+  document.getElementById(cittaId).style.display = 'block';
 
-  document.getElementById(regioneId).style.display = 'none';
-
-  document.getElementById(cittaId).style.display = 'block';
-
-
-
-  // Aggiorna titolo con nome della città selezionata
-
-  const cittaNome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
-
-  document.getElementById('titolo').textContent = cittaNome;
-
+  // Aggiorna titolo con nome della città selezionata
+  const cittaNome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
+  document.getElementById('titolo').textContent = cittaNome;
 }
 
 function showRegionsBack(regioneId) {
+  document.getElementById(regioneId).style.display = 'none';
+  document.getElementById('regioni').style.display = 'block';
 
-  document.getElementById(regioneId).style.display = 'none';
+  // Torna al titolo "Italia"
+  document.getElementById('titolo').textContent = 'Italia';
+}
 
-  document.getElementById('regioni').style.display = 'block';}
+function showCittaBack(cittaId, regioneId) {
+  document.getElementById(cittaId).style.display = 'none';
+  document.getElementById(regioneId).style.display = 'block';
 
+  // Torna al titolo con nome della regione
+  const regioneNome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  document.getElementById('titolo').textContent = regioneNome;
+}
 </script>
+
+
 </html>
