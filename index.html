@@ -3464,63 +3464,61 @@ z
 </tbody>
 </table>
 </div>
+
 <script>
-/**
- * FUNZIONE PRINCIPALE: Nasconde tutto e mostra solo quello che serve
- * @param {string} idDaMostrare - L'ID del div (es. 'puglia', 'bari', 'umbria')
- * @param {string} titolo - Il testo da mettere nell'header h1
- */
+// Questa funzione nasconde TUTTE le sezioni tranne quella che vogliamo vedere
 function gestisciPagine(idDaMostrare, titolo) {
-  // 1. Seleziona tutti i div che hanno una classe "sezione-pagina" 
-  // (Assicurati di aggiungere class="sezione-pagina" ai tuoi div nel HTML)
-  const tutteLeSezioni = document.querySelectorAll('.sezione-pagina');
-  
-  tutteLeSezioni.forEach(sezione => {
-    sezione.style.display = 'none';
+  // 1. Lista di tutte le sezioni principali che hai nel sito
+  const sezioni = ['stati', 'regioni', 'puglia', 'umbria', 'abruzzo', 'piemonte']; 
+
+  // 2. Ciclo che le nasconde tutte
+  sezioni.forEach(id => {
+    const elemento = document.getElementById(id);
+    if (elemento) elemento.style.display = 'none';
   });
 
-  // 2. Mostra la sezione richiesta
+  // 3. Mostra solo quella che serve
   const target = document.getElementById(idDaMostrare);
-  if (target) {
-    target.style.display = 'block';
-  } else {
-    console.error("Errore: Non trovo l'ID " + idDaMostrare);
-  }
+  if (target) target.style.display = 'block';
 
-  // 3. Aggiorna il titolo della pagina
-  const elementoTitolo = document.getElementById('titolo');
-  if (elementoTitolo && titolo) {
-    elementoTitolo.textContent = titolo;
-  }
+  // 4. Cambia il titolo
+  if (titolo) document.getElementById('titolo').textContent = titolo;
 }
 
-// --- COMANDI PER LA NAVIGAZIONE ---
+// --- FUNZIONI SEMPLIFICATE ---
 
-// Torna alla scelta tra Italia / Estero
 function showStatesBack() {
   gestisciPagine('stati', 'LOCALI SENZA GLUTINE');
 }
 
-// Mostra l'elenco delle Regioni (dopo aver cliccato Italia)
 function showRegions() {
   gestisciPagine('regioni', 'Italia');
 }
 
-// Mostra una Regione specifica (es. Puglia, Umbria)
 function showCitta(regioneId) {
+  // Prende l'ID (es. 'umbria') e mette la prima lettera maiuscola per il titolo
   const nomeMaiuscolo = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
   gestisciPagine(regioneId, nomeMaiuscolo);
 }
 
-// Mostra i locali di una città specifica (es. Bari, Lecce)
-function showLocali(cittaId) {
-  const nomeCitta = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
-  gestisciPagine(cittaId, nomeCitta);
+function showRegionsBack() {
+  showRegions();
 }
 
-// Torna indietro dalle città alla regione
-function showRegionsBack(regioneId) {
-  showCitta(regioneId);
+function showLocali(cittaId, regioneId) {
+
+  document.getElementById(regioneId).style.display = 'none';
+
+  document.getElementById(cittaId).style.display = 'block';
+
+
+
+  // Aggiorna titolo con nome della città selezionata
+
+  const cittaNome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
+
+  document.getElementById('titolo').textContent = cittaNome;
+
 }
 </script>
 </html>
