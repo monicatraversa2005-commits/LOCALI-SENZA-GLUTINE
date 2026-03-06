@@ -922,7 +922,7 @@ z
     <tr><td>Gulp</td><td>Via Pappacena, 24/A</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato, domenica -> cena)</td></tr>
     <tr><td>La Ciccia</td><td>Lungomare Cristoforo Colombo, 140</td><td style="color:transparent;">●</td><td>cena (martedì chiuso)</td></tr>
     <tr><td>Oiza chicken</td><td>Via Zanardelli, 76</td><td style="color:transparent;">●</td><td>pranzo, cena (sabato, domenica -> cena)</td></tr>
-    <tr><td>Scazz</td><td>Via Scipione Crisanzio, 36</td><td style="color:transparent;">●</td><td>pranzo, cena (domenica chiuso)</td></tr>
+    <tr><td>Scazz</td><td>Via Scipione Crisanzio, 36</td><td style="color:green;">●</td><td>pranzo, cena (domenica chiuso)</td></tr>
 
   </tbody>
  </table>
@@ -3219,7 +3219,7 @@ z
     </tr>
   </thead>
   <tbody>
-          <tr><td>Il Casale degli Amici</td><td>Vocabolo Cappuccini, 157</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
+          <tr><td>Il Casale degli Amici</td><td>Vocabolo Cappuccini, 157</td><td style="color:green;">●</td><td>pranzo, cena</td></tr>
           <tr><td>Granaro del Monte</td><td>Via Alfieri, 12</td><td style="color:transparent;">●</td><td>pranzo, cena</td></tr>
           <tr><td>Trattoria dei Priori</td><td>Via Meggiana, 23</td><td style="color:transparent;">●</td><td>pranzo, cena (martedì chiuso)</td></tr>
           <tr><td>Sienti 'n Può</td><td>Corso Sertorio, 46</td><td style="color:transparent;">●</td><td>pranzo, cena (mercoledì chiuso)</td></tr>
@@ -3467,69 +3467,39 @@ z
 
 
 <script>
-/**
- * FUNZIONE UNIVERSALE DI NAVIGAZIONE
- * Nasconde ogni elemento con classe 'sezione-pagina' e mostra solo l'ID scelto.
- */
-function gestisciPagine(idDaMostrare, titolo) {
-  // 1. Seleziona TUTTI i contenitori che devono sparire/apparire
-  const sezioni = document.querySelectorAll('.sezione-pagina');
-  
-  // 2. Nasconde tutto (così le pagine non si sovrappongono mai)
-  sezioni.forEach(sezione => {
-    sezione.style.display = 'none';
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const pagine = document.querySelectorAll(".sezione-pagina");
+
+  document.addEventListener("click", function(e){
+
+    const bottone = e.target.closest("[data-apri]");
+    if(!bottone) return;
+
+    const idPagina = bottone.dataset.apri;
+    const titolo = bottone.dataset.titolo;
+
+    // nasconde tutte le pagine
+    pagine.forEach(p => p.style.display = "none");
+
+    // mostra quella richiesta
+    const target = document.getElementById(idPagina);
+    if(target){
+      target.style.display = "block";
+    }
+
+    // cambia titolo se esiste
+    if(titolo){
+      const titoloPagina = document.getElementById("titolo");
+      if(titoloPagina){
+        titoloPagina.textContent = titolo;
+      }
+    }
+
   });
 
-  // 3. Mostra la sezione specifica richiesta
-  const target = document.getElementById(idDaMostrare);
-  if (target) {
-    target.style.display = 'block';
-    
-    // 4. Aggiorna il titolo principale H1 (se esiste)
-    const h1Titolo = document.getElementById('titolo');
-    if (h1Titolo && titolo) {
-      h1Titolo.textContent = titolo;
-    }
-  } else {
-    // Messaggio di aiuto se sbagli a scrivere un ID nell'HTML
-    console.warn("Attenzione: Non esiste un div con id='" + idDaMostrare + "'");
-  }
-}
+});
 
-// --- FUNZIONI PER I PULSANTI ---
-
-// Torna alla schermata iniziale (Stati)
-function showStatesBack() {
-  gestisciPagine('stati', 'LOCALI SENZA GLUTINE');
-}
-
-// Mostra la schermata delle Regioni (es. Italia)
-function showRegions() {
-  gestisciPagine('regioni', 'Italia');
-}
-
-// Mostra una singola Regione (es. Abruzzo, Puglia)
-function showCitta(regioneId) {
-  const nomeMaiuscolo = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  gestisciPagine(regioneId, nomeMaiuscolo);
-}
-
-// Mostra i locali di una Città (es. Pescara, Bari)
-function showLocali(cittaId) {
-  const nomeCitta = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
-  gestisciPagine(cittaId, nomeCitta);
-}
-
-// --- FUNZIONI "TORNA INDIETRO" ---
-
-// Torna alla lista delle Regioni
-function showRegionsBack() {
-  showRegions();
-}
-
-// Torna alla schermata della Regione specifica (es. da Pescara torna ad Abruzzo)
-function showCittaBack(regioneId) {
-  showCitta(regioneId);
-}
 </script>
 </html>
