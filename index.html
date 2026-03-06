@@ -3464,55 +3464,72 @@ z
 </tbody>
 </table>
 </div>
+
+
 <script>
 /**
- * FUNZIONE UNIVERSALE
- * Nasconde tutto ciò che ha classe 'sezione-pagina' e mostra solo l'ID scelto.
+ * FUNZIONE UNIVERSALE DI NAVIGAZIONE
+ * Nasconde ogni elemento con classe 'sezione-pagina' e mostra solo l'ID scelto.
  */
 function gestisciPagine(idDaMostrare, titolo) {
-  // Trova in automatico tutti i div con quella classe
+  // 1. Seleziona TUTTI i contenitori che devono sparire/apparire
   const sezioni = document.querySelectorAll('.sezione-pagina');
   
+  // 2. Nasconde tutto (così le pagine non si sovrappongono mai)
   sezioni.forEach(sezione => {
     sezione.style.display = 'none';
   });
 
+  // 3. Mostra la sezione specifica richiesta
   const target = document.getElementById(idDaMostrare);
   if (target) {
     target.style.display = 'block';
-    if (titolo) document.getElementById('titolo').textContent = titolo;
+    
+    // 4. Aggiorna il titolo principale H1 (se esiste)
+    const h1Titolo = document.getElementById('titolo');
+    if (h1Titolo && titolo) {
+      h1Titolo.textContent = titolo;
+    }
+  } else {
+    // Messaggio di aiuto se sbagli a scrivere un ID nell'HTML
+    console.warn("Attenzione: Non esiste un div con id='" + idDaMostrare + "'");
   }
 }
 
-// --- NAVIGAZIONE ---
+// --- FUNZIONI PER I PULSANTI ---
 
+// Torna alla schermata iniziale (Stati)
 function showStatesBack() {
   gestisciPagine('stati', 'LOCALI SENZA GLUTINE');
 }
 
+// Mostra la schermata delle Regioni (es. Italia)
 function showRegions() {
   gestisciPagine('regioni', 'Italia');
 }
 
+// Mostra una singola Regione (es. Abruzzo, Puglia)
 function showCitta(regioneId) {
-  const nome = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
-  gestisciPagine(regioneId, nome);
+  const nomeMaiuscolo = regioneId.charAt(0).toUpperCase() + regioneId.slice(1);
+  gestisciPagine(regioneId, nomeMaiuscolo);
 }
 
+// Mostra i locali di una Città (es. Pescara, Bari)
 function showLocali(cittaId) {
-  const nome = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
-  gestisciPagine(cittaId, nome);
+  const nomeCitta = cittaId.charAt(0).toUpperCase() + cittaId.slice(1);
+  gestisciPagine(cittaId, nomeCitta);
 }
 
-// --- TASTI TORNA INDIETRO (Semplificati) ---
+// --- FUNZIONI "TORNA INDIETRO" ---
 
+// Torna alla lista delle Regioni
 function showRegionsBack() {
   showRegions();
 }
 
+// Torna alla schermata della Regione specifica (es. da Pescara torna ad Abruzzo)
 function showCittaBack(regioneId) {
   showCitta(regioneId);
 }
 </script>
-
 </html>
