@@ -100,7 +100,7 @@ p.lead { margin:6px 0 18px; color: var(--muted); font-size: 14px; }
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  transition: transform .12s ease, background #f5efeb.12s ease, box-shadow .12s ease;
+  transition: transform .12s ease, .12s ease, box-shadow .12s ease;
   background: transparent;
 }
 .country:hover {
@@ -275,9 +275,9 @@ table td:not(:first-child) {
     <nav>
       <div id="stati" style="display:block; margin-top:20px;">
         <ul>
-          <li id="link-italia-li">
-           <a href="#" class="link-italia" onclick="showRegions()">ITALIA</a>
-          </li>
+          <li>
+        <a href="#" class="link-italia" data-apri="regioni" data-titolo="STATI">ITALIA</a>
+      </li>
         </ul>
       </div>
     </nav>
@@ -285,28 +285,28 @@ table td:not(:first-child) {
 
 <!-- REGIONI -->
 <div id="regioni" style="display:none; margin-top:20px;">
-  <button onclick="showStatesBack()">← Torna agli stati</button>
+  <button data-apri="stati" data-titolo="LOCALI SENZA GLUTINE">← Torna agli stati</button>
   <ul>
-    <li><a href="#" class="link-italia" onclick="showCitta('abruzzo')">Abruzzo</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('basilicata')">Basilicata</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('calabria')">Calabria</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('campania')">Campania</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('emilia-Romagna')">Emilia-Romagna</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('friuli Venezia Giulia')">Friuli Venezia Giulia</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('lazio')">Lazio</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('liguria')">Liguria</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('lombardia')">Lombardia</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('marche')">Marche</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('molise')">Molise</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('piemonte')">Piemonte</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('puglia')">Puglia</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('sardegna')">Sardegna</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('sicilia')">Sicilia</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('toscana')">Toscana</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('trentino-Alto Adige')">Trentino-Alto Adige</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('umbria')">Umbria</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('valle d\'Aosta')">Valle d'Aosta</a></li>
-    <li><a href="#" class="link-italia" onclick="showCitta('veneto')">Veneto</a></li>
+<li><a href="#" class="link-italia" data-apri="abruzzo" data-titolo="Abruzzo">Abruzzo</a></li>
+<li><a href="#" class="link-italia" data-apri="basilicata" data-titolo="Basilicata">Basilicata</a></li>
+<li><a href="#" class="link-italia" data-apri="calabria" data-titolo="Calabria">Calabria</a></li>
+<li><a href="#" class="link-italia" data-apri="campania" data-titolo="Campania">Campania</a></li>
+<li><a href="#" class="link-italia" data-apri="emiliaromagna" data-titolo="Emilia Romagna">Emilia Romagna</a></li>
+<li><a href="#" class="link-italia" data-apri="friuli" data-titolo="Friuli Venezia Giulia">Friuli Venezia Giulia</a></li>
+<li><a href="#" class="link-italia" data-apri="lazio" data-titolo="Lazio">Lazio</a></li>
+<li><a href="#" class="link-italia" data-apri="liguria" data-titolo="Liguria">Liguria</a></li>
+<li><a href="#" class="link-italia" data-apri="lombardia" data-titolo="Lombardia">Lombardia</a></li>
+<li><a href="#" class="link-italia" data-apri="marche" data-titolo="Marche">Marche</a></li>
+<li><a href="#" class="link-italia" data-apri="molise" data-titolo="Molise">Molise</a></li>
+<li><a href="#" class="link-italia" data-apri="piemonte" data-titolo="Piemonte">Piemonte</a></li>
+<li><a href="#" class="link-italia" data-apri="puglia" data-titolo="Puglia">Puglia</a></li>
+<li><a href="#" class="link-italia" data-apri="sardegna" data-titolo="Sardegna">Sardegna</a></li>
+<li><a href="#" class="link-italia" data-apri="sicilia" data-titolo="Sicilia">Sicilia</a></li>
+<li><a href="#" class="link-italia" data-apri="toscana" data-titolo="Toscana">Toscana</a></li>
+<li><a href="#" class="link-italia" data-apri="trentino" data-titolo="Trentino Alto Adige">Trentino Alto Adige</a></li>
+<li><a href="#" class="link-italia" data-apri="umbria" data-titolo="Umbria">Umbria</a></li>
+<li><a href="#" class="link-italia" data-apri="aosta" data-titolo="Val d'Aosta">Val d'Aosta</a></li>
+<li><a href="#" class="link-italia" data-apri="veneto" data-titolo="Veneto">Veneto</a></li>
   </ul>
 </div>
 
@@ -316,43 +316,44 @@ table td:not(:first-child) {
 
 <!-- PUGLIA -->
 <div id="puglia" style="display:none;">
-  <button onclick="showRegionsBack('puglia')">← Torna alle regioni</button>
-  <a href="#" class="link-italia" onclick="showLocali('acquaviva delle fonti','puglia')">Aquaviva delle Fonti</a>
-  <a href="#" class="link-italia" onclick="showLocali('adelfia','puglia')">Adelfia</a>
-  <a href="#" class="link-italia" onclick="showLocali('alberobello','puglia')">Alberobello</a>
-  <a href="#" class="link-italia" onclick="showLocali('altamura','puglia')">Altamura</a>
-  <a href="#" class="link-italia" onclick="showLocali('andria','puglia')">Andria</a>
-  <a href="#" class="link-italia" onclick="showLocali('bari','puglia')">Bari</a>
-  <a href="#" class="link-italia" onclick="showLocali('bisceglie','puglia')">Bisceglie</a>
-  <a href="#" class="link-italia" onclick="showLocali('bitetto','puglia')">Bitetto</a>
-  <a href="#" class="link-italia" onclick="showLocali('bitritto','puglia')">Bitritto</a>
-  <a href="#" class="link-italia" onclick="showLocali('capurso','puglia')">Capurso</a>
-  <a href="#" class="link-italia" onclick="showLocali('casamassima','puglia')">Casamassima</a>
-  <a href="#" class="link-italia" onclick="showLocali('castellana grotte','puglia')">Castellana Grotte</a>
-  <a href="#" class="link-italia" onclick="showLocali('cellamare','puglia')">Cellamare</a>
-  <a href="#" class="link-italia" onclick="showLocali('conversano','puglia')">Conversano</a>
-  <a href="#" class="link-italia" onclick="showLocali('foggia','puglia')">Foggia</a>
-  <a href="#" class="link-italia" onclick="showLocali('giovinazzo','puglia')">Giovinazzo</a>
-  <a href="#" class="link-italia" onclick="showLocali('modugno','puglia')">Modugno</a>
-  <a href="#" class="link-italia" onclick="showLocali('mola di bari','puglia')">Mola di Bari</a>
-  <a href="#" class="link-italia" onclick="showLocali('molfetta','puglia')">Molfetta</a>
-  <a href="#" class="link-italia" onclick="showLocali('monopoli','puglia')">Monopoli</a>
-  <a href="#" class="link-italia" onclick="showLocali('polignano','puglia')">Polignano</a>
-  <a href="#" class="link-italia" onclick="showLocali('putignano','puglia')">Putignano</a>
-  <a href="#" class="link-italia" onclick="showLocali('san foca','puglia')">San Foca</a>
-  <a href="#" class="link-italia" onclick="showLocali('torre a mare','puglia')">Torre a mare</a>
-  <a href="#" class="link-italia" onclick="showLocali('torre dellorso','puglia')">Torre dell'orso</a>
-  <a href="#" class="link-italia" onclick="showLocali('trani','puglia')">Trani</a>
-  <a href="#" class="link-italia" onclick="showLocali('valenzano','puglia')">Valenzano</a>
-  <a href="#" class="link-italia" onclick="showLocali('vieste','puglia')">Vieste</a>
+ <button data-apri="regioni" data-titolo="Puglia">← Torna alle regioni</button>
+  <a href="#" class="link-italia" data-apri="acquaviva" data-titolo="Acquaviva delle Fonti">Acquaviva delle Fonti</a>
+  <a href="#" class="link-italia" data-apri="adelfia" data-titolo="Adelfia">Adelfia</a>
+  <a href="#" class="link-italia" data-apri="alberobello" data-titolo="Alberobello">Alberobello</a>
+  <a href="#" class="link-italia" data-apri="altamura" data-titolo="Altamura">Altamura</a>
+  <a href="#" class="link-italia" data-apri="andria" data-titolo="Andria">Andria</a>
+<a href="#" class="link-italia" data-apri="bari" data-titolo="Bari">Bari</a>
+<a href="#" class="link-italia" data-apri="bisceglie" data-titolo="Bisceglie">Bisceglie</a>
+<a href="#" class="link-italia" data-apri="bitetto" data-titolo="Bitetto">Bitetto</a>
+<a href="#" class="link-italia" data-apri="bitritto" data-titolo="Bitritto">Bitritto</a>
+<a href="#" class="link-italia" data-apri="capurso" data-titolo="Capurso">Capurso</a>
+<a href="#" class="link-italia" data-apri="casamassima" data-titolo="Casamassima">Casamassima</a>
+<a href="#" class="link-italia" data-apri="castellana-grotte" data-titolo="Castellana Grotte">Castellana Grotte</a>
+<a href="#" class="link-italia" data-apri="cellamare" data-titolo="Cellamare">Cellamare</a>
+<a href="#" class="link-italia" data-apri="conversano" data-titolo="Conversano">Conversano</a>
+<a href="#" class="link-italia" data-apri="foggia" data-titolo="Foggia">Foggia</a>
+<a href="#" class="link-italia" data-apri="giovinazzo" data-titolo="Giovinazzo">Giovinazzo</a>
+<a href="#" class="link-italia" data-apri="modugno" data-titolo="Modugno">Modugno</a>
+<a href="#" class="link-italia" data-apri="mola-di-bari" data-titolo="Mola di Bari">Mola di Bari</a>
+<a href="#" class="link-italia" data-apri="molfetta" data-titolo="Molfetta">Molfetta</a>
+<a href="#" class="link-italia" data-apri="monopoli" data-titolo="Monopoli">Monopoli</a>
+<a href="#" class="link-italia" data-apri="polignano" data-titolo="Polignano">Polignano</a>
+<a href="#" class="link-italia" data-apri="putignano" data-titolo="Putignano">Putignano</a>
+<a href="#" class="link-italia" data-apri="san-foca" data-titolo="San Foca">San Foca</a>
+<a href="#" class="link-italia" data-apri="torre-a-mare" data-titolo="Torre a mare">Torre a mare</a>
+<a href="#" class="link-italia" data-apri="torre-dell-orso" data-titolo="Torre dell'orso">Torre dell'orso</a>
+<a href="#" class="link-italia" data-apri="trani" data-titolo="Trani">Trani</a>
+<a href="#" class="link-italia" data-apri="valenzano" data-titolo="Valenzano">Valenzano</a>
+<a href="#" class="link-italia" data-apri="vieste" data-titolo="Vieste">Vieste</a>
 
 </div>
 
 <!-- ACQUAVIVA DELLE FONTI -->
-<div id="acquaviva delle fonti" style="display:none;">
-  <button onclick="showCittaBack('acquaviva delle fonti','puglia')">← Torna a Puglia</button>
-  <table class="pizzeria">
-    <thead>
+<div id="acquaviva" style="display:none;">
+  <button data-apri="puglia" data-titolo="Acquaviva delle fonti">← Torna a Puglia</button>
+   
+ <table class="pizzeria">
+  <thead>
       <tr>
         <th>PIZZERIA</th>
         <th> </th>
@@ -3464,35 +3465,51 @@ z
 </table>
 </div>
 
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  // Gestisce i clic su tutta la pagina
-  document.addEventListener("click", function(e){
+  // Gestore universale dei clic su tutta la pagina
+  document.addEventListener("click", function(e) {
     
-    // Cerca se l'elemento cliccato ha il "data-apri"
+    // Cerca se l'elemento cliccato (o un suo genitore come <a> o <button>) ha "data-apri"
     const bottone = e.target.closest("[data-apri]");
-    if(!bottone) return;
+    
+    // Se non abbiamo cliccato un elemento con data-apri, non fare nulla
+    if (!bottone) return;
 
     // Impedisce al link di ricaricare la pagina
     e.preventDefault();
 
-    const idPagina = bottone.dataset.apri;
-    const titolo = bottone.dataset.titolo;
+    const idTarget = bottone.dataset.apri;
+    const nuovoTitolo = bottone.dataset.titolo;
 
-    // Nasconde TUTTI i div che hanno la classe sezione-pagina
-    const pagine = document.querySelectorAll(".sezione-pagina");
-    pagine.forEach(p => p.style.display = "none");
+    // 1. Trova la sezione da mostrare
+    const sezioneTarget = document.getElementById(idTarget);
 
-    // Mostra la pagina richiesta
-    const target = document.getElementById(idPagina);
-    if(target){
-      target.style.display = "block";
-    }
+    if (sezioneTarget) {
+      // 2. Nascondi TUTTI i contenitori di navigazione e le tabelle
+      // Nascondiamo il nav degli stati, il div regioni, e tutti i div delle città
+      const sezioniDaNascondere = document.querySelectorAll('nav#stati, div#regioni, div[id]:not(#titolo):not(header)');
+      sezioniDaNascondere.forEach(s => {
+        s.style.display = "none";
+      });
 
-    // Cambia il titolo h1 se previsto
-    if(titolo){
-      const titoloPagina = document.getElementById("titolo");
-      if(titoloPagina) titoloPagina.textContent = titolo;
+      // 3. Mostra solo la sezione che ci serve
+      sezioneTarget.style.display = "block";
+
+      // 4. Cambia il titolo in alto se è stato specificato nel bottone
+      if (nuovoTitolo) {
+        const elementoTitolo = document.getElementById("titolo");
+        if (elementoTitolo) {
+          elementoTitolo.textContent = nuovoTitolo;
+        }
+      }
+
+      // 5. Torna in cima alla pagina (utile su mobile)
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+    } else {
+      console.warn("Errore: Non trovo una sezione con id: " + idTarget);
     }
   });
 });
