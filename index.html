@@ -3116,14 +3116,14 @@ z
 
 <!-- UMBRIA -->
 <div id="umbria" style="display:none;">
-  <button onclick="showRegionsBack('umbria')">← Torna alle regioni</button>
-  <a href="#" class="link-italia" onclick="showLocali('cascia','umbria')">Cascia</a>
-  <a href="#" class="link-italia" onclick="showLocali('norcia','umbria')">Norcia</a>
+  <button data-apri="regioni" data-titolo="Umbria">← Torna alle regioni</button>
+  <a href="#" class="link-italia" data-apri="cascia" data-titolo="Cascia">Casciai</a>
+  <a href="#" class="link-italia" data-apri="norcia" data-titolo="Norcia">Norcia</a>
 </div>
 
 <!-- CASCIA -->
 <div id="cascia" style="display:none;">
-  <button onclick="showCittaBack('cascia','umbria')">← Torna a Umbria</button>
+  <button data-apri="umbria" data-titolo="Cascia">← Torna a Umbria</button>
   <table class="pizzeria">
     <thead>
       <tr>
@@ -3168,7 +3168,7 @@ z
 
 <!-- NORCIA -->
 <div id="norcia" style="display:none;">
-  <button onclick="showCittaBack('norcia','umbria')">← Torna a Umbria</button>
+  <button data-apri="umbria" data-titolo="Norcia">← Torna a Umbria</button>
   <table class="pizzeria">
     <thead>
       <tr>
@@ -3269,14 +3269,14 @@ z
 
 <!-- ABRUZZO -->
 <div id="abruzzo" style="display:none;">
-  <button onclick="showRegionsBack('abruzzo')">← Torna alle regioni</button>
-  <a href="#" class="link-italia" onclick="showLocali('colledara','abruzzo')">Colledara</a>
-  <a href="#" class="link-italia" onclick="showLocali('teramo','abruzzo')">Teramo</a>
+  <button data-apri="regioni" data-titolo="Abruzzo">← Torna alle regioni</button>
+  <a href="#" class="link-italia" data-apri="colledara" data-titolo="Colledara">Colledara</a>
+  <a href="#" class="link-italia" data-apri="teramo" data-titolo="Teramo">Teramo</a>
 </div>
 
 <!-- COLLEDARA -->
 <div id="colledara" style="display:none;">
-  <button onclick="showCittaBack('colledara','abruzzo')">← Torna ad Abruzzo</button>
+  <button data-apri="abruzzo" data-titolo="Colledara">← Torna ad Abruzzo</button>
   <table class="pizzeria">
     <thead>
       <tr>
@@ -3331,7 +3331,7 @@ z
 
 <!-- TERAMO -->
 <div id="teramo" style="display:none;">
-  <button onclick="showCittaBack('teramo','abruzzo')">← Torna ad Abruzzo</button>
+  <button data-apri="abruzzo" data-titolo="Teramo">← Torna ad Abruzzo</button>
   <table class="pizzeria">
     <thead>
       <tr>
