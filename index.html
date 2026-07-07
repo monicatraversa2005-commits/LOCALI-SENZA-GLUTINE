@@ -191,23 +191,20 @@ footer { grid-column:1/-1; margin-top:12px; color:var(--muted); font-size:13px; 
 }
 
 .link-stati {
-  color: #2f4156;
+  color: #2f4156;                         /* Il blu scuro visibile */
   text-decoration: none;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.2s ease;
   font-weight: bold;
   font-size: 35px;
-  display: block;
+  display: inline-block;                  /* Modificato da block a inline-block */
   margin-bottom: 10px;
 }
+
 .link-stati:hover {
   color: #567c8d;
   background-color: transparent;
   padding: 4px 8px;
   border-radius: 6px;
-}
-.link-stati {
-  background-color: #2f4156;
-  color: #ffffff;
 }
 
 /* ===========================
