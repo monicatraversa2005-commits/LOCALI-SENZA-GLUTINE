@@ -190,7 +190,7 @@ footer { grid-column:1/-1; margin-top:12px; color:var(--muted); font-size:13px; 
   letter-spacing: 1px;
 }
 
-.link-s:active:active:active {
+.link-stati {
   color: #2f4156;
   text-decoration: none;
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -199,13 +199,13 @@ footer { grid-column:1/-1; margin-top:12px; color:var(--muted); font-size:13px; 
   display: block;
   margin-bottom: 10px;
 }
-.link-s:active:active:active:hover {
+.link-stati {
   color: #567c8d;
   background-color: transparent;
   padding: 4px 8px;
   border-radius: 6px;
 }
-.link-s:active:active:active:active {
+.link-stati {
   background-color: #2f4156;
   color: #ffffff;
 }
@@ -256,7 +256,7 @@ table td:not(:first-child) {
   h1 { font-size: 7vw; }
   h2 { font-size: 5.5vw; }
   h3 { font-size: 5vw; }
-  .link-s:active:active:active { font-size: 5vw; }
+   { font-size: 5vw; }
   table { font-size: 4vw; }
   .country .name { font-size: 5vw; }
   .country .meta { font-size: 4vw; }
@@ -276,8 +276,8 @@ table td:not(:first-child) {
       <div id="stati" style="display:block; margin-top:20px;">
         <ul>
           <li>
-                    <a href="#" class="link-stati.link-s:active:active:active" data-apri="regioni" data-titolo="REGIONI">GRECIA</a>
-            <a href="#" class="link-stati.link-s:active:active:active" data-apri="regioni" data-titolo="REGIONI">ITALIA</a>
+                    <a href="#" class="link-stati" data-apri="regionigrecia" data-titolo="REGIONI">GRECIA</a>
+            <a href="#" class="link-stati" data-apri="regioniitalia" data-titolo="REGIONI">ITALIA</a>
       </li>
         </ul>
       </div>
@@ -289,29 +289,29 @@ table td:not(:first-child) {
 
 
 <!-- REGIONI -->
-<div id="regioni" style="display:none; margin-top:20px;">
+<div id="regioniitalia" style="display:none; margin-top:20px;">
   <button data-apri="stati" data-titolo="LOCALI SENZA GLUTINE">← Torna agli stati</button>
   <ul>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="abruzzo" data-titolo="Abruzzo">Abruzzo</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="basilicata" data-titolo="Basilicata">Basilicata</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="calabria" data-titolo="Calabria">Calabria</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="campania" data-titolo="Campania">Campania</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="emiliaromagna" data-titolo="Emilia Romagna">Emilia Romagna</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="friuli" data-titolo="Friuli Venezia Giulia">Friuli Venezia Giulia</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="lazio" data-titolo="Lazio">Lazio</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="liguria" data-titolo="Liguria">Liguria</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="lombardia" data-titolo="Lombardia">Lombardia</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="marche" data-titolo="Marche">Marche</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="molise" data-titolo="Molise">Molise</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="piemonte" data-titolo="Piemonte">Piemonte</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="puglia" data-titolo="Puglia">Puglia</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="sardegna" data-titolo="Sardegna">Sardegna</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="sicilia" data-titolo="Sicilia">Sicilia</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="toscana" data-titolo="Toscana">Toscana</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="trentino" data-titolo="Trentino Alto Adige">Trentino Alto Adige</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="umbria" data-titolo="Umbria">Umbria</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="aosta" data-titolo="Val d'Aosta">Val d'Aosta</a></li>
-<li><a href="#" class="link-stati.link-s:active:active:active" data-apri="veneto" data-titolo="Veneto">Veneto</a></li>
+<li><a href="#" class="link-stati" data-apri="abruzzo" data-titolo="Abruzzo">Abruzzo</a></li>
+<li><a href="#" class="link-stati" data-apri="basilicata" data-titolo="Basilicata">Basilicata</a></li>
+<li><a href="#" class="link-stati" data-apri="calabria" data-titolo="Calabria">Calabria</a></li>
+<li><a href="#" class="link-stati" data-apri="campania" data-titolo="Campania">Campania</a></li>
+<li><a href="#" class="link-stati" data-apri="emiliaromagna" data-titolo="Emilia Romagna">Emilia Romagna</a></li>
+<li><a href="#" class="link-stati" data-apri="friuli" data-titolo="Friuli Venezia Giulia">Friuli Venezia Giulia</a></li>
+<li><a href="#" class="link-stati" data-apri="lazio" data-titolo="Lazio">Lazio</a></li>
+<li><a href="#" class="link-stati" data-apri="liguria" data-titolo="Liguria">Liguria</a></li>
+<li><a href="#" class="link-stati" data-apri="lombardia" data-titolo="Lombardia">Lombardia</a></li>
+<li><a href="#" class="link-stati" data-apri="marche" data-titolo="Marche">Marche</a></li>
+<li><a href="#" class="link-stati" data-apri="molise" data-titolo="Molise">Molise</a></li>
+<li><a href="#" class="link-stati" data-apri="piemonte" data-titolo="Piemonte">Piemonte</a></li>
+<li><a href="#" class="link-stati" data-apri="puglia" data-titolo="Puglia">Puglia</a></li>
+<li><a href="#" class="link-stati" data-apri="sardegna" data-titolo="Sardegna">Sardegna</a></li>
+<li><a href="#" class="link-stati" data-apri="sicilia" data-titolo="Sicilia">Sicilia</a></li>
+<li><a href="#" class="link-stati" data-apri="toscana" data-titolo="Toscana">Toscana</a></li>
+<li><a href="#" class="link-stati" data-apri="trentino" data-titolo="Trentino Alto Adige">Trentino Alto Adige</a></li>
+<li><a href="#" class="link-stati" data-apri="umbria" data-titolo="Umbria">Umbria</a></li>
+<li><a href="#" class="link-stati" data-apri="aosta" data-titolo="Val d'Aosta">Val d'Aosta</a></li>
+<li><a href="#" class="link-stati" data-apri="veneto" data-titolo="Veneto">Veneto</a></li>
   </ul>
 </div>
 
@@ -319,7 +319,7 @@ table td:not(:first-child) {
 <!-- BASILICATA -->
 <div id="basilicata" style="display:none;">
  <button data-apri="regioni" data-titolo="Basilicata">← Torna alle regioni</button>
-   <a href="#" class="link-stati.link-s:active:active:active" data-apri="matera" data-titolo="Matera">Matera</a>
+   <a href="#" class="link-stati" data-apri="matera" data-titolo="Matera">Matera</a>
 </div>
 
 <!-- MATERA -->
@@ -529,47 +529,47 @@ table td:not(:first-child) {
 <!-- PUGLIA -->
 <div id="puglia" style="display:none;">
  <button data-apri="regioni" data-titolo="Puglia">← Torna alle regioni</button>
-   <a href="#" class="link-stati.link-s:active:active:active" data-apri="acaya" data-titolo="Acaya">Acaya</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="acquaviva" data-titolo="Acquaviva delle Fonti">Acquaviva delle Fonti</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="adelfia" data-titolo="Adelfia">Adelfia</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="alberobello" data-titolo="Alberobello">Alberobello</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="alberona" data-titolo="Alberona">Alberona</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="alessano" data-titolo="Alessano">Alessano</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="alezio" data-titolo="Alezio">Alezio</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="altamura" data-titolo="Altamura">Altamura</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="andria" data-titolo="Andria">Andria</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="bari" data-titolo="Bari">Bari</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="binetto" data-titolo="Binetto">Binetto</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="bisceglie" data-titolo="Bisceglie">Bisceglie</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="bitetto" data-titolo="Bitetto">Bitetto</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="bitritto" data-titolo="Bitritto">Bitritto</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="capurso" data-titolo="Capurso">Capurso</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="casamassima" data-titolo="Casamassima">Casamassima</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="castellana grotte" data-titolo="Castellana Grotte">Castellana Grotte</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="cavallino" data-titolo="Cavallino">Cavallino</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="cellamare" data-titolo="Cellamare">Cellamare</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="conversano" data-titolo="Conversano">Conversano</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="foggia" data-titolo="Foggia">Foggia</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="galatina" data-titolo="Galatina">Galatina</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="giovinazzo" data-titolo="Giovinazzo">Giovinazzo</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="melendugno" data-titolo="Melendugno">Melendugno</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="modugno" data-titolo="Modugno">Modugno</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="mola di bari" data-titolo="Mola di Bari">Mola di Bari</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="molfetta" data-titolo="Molfetta">Molfetta</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="monopoli" data-titolo="Monopoli">Monopoli</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="pisignano" data-titolo="Pisignano">Pisignano</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="polignano" data-titolo="Polignano">Polignano</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="putignano" data-titolo="Putignano">Putignano</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="san foca" data-titolo="San Foca">San Foca</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="toritto" data-titolo="Toritto">Toritto</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="torre a mare" data-titolo="Torre a mare">Torre a mare</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="torre dellorso" data-titolo="Torre dell'orso">Torre dell'orso</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="santandrea" data-titolo="Torre Sant'Andrea">Torre Sant'Andrea</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="saracena" data-titolo="Torre Saracena">Torre Saracena</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="trani" data-titolo="Trani">Trani</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="valenzano" data-titolo="Valenzano">Valenzano</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="vernole" data-titolo="Vernole">Vernole</a>
-<a href="#" class="link-stati.link-s:active:active:active" data-apri="vieste" data-titolo="Vieste">Vieste</a>
+   <a href="#" class="link-stati" data-apri="acaya" data-titolo="Acaya">Acaya</a>
+  <a href="#" class="link-stati" data-apri="acquaviva" data-titolo="Acquaviva delle Fonti">Acquaviva delle Fonti</a>
+  <a href="#" class="link-stati" data-apri="adelfia" data-titolo="Adelfia">Adelfia</a>
+  <a href="#" class="link-stati" data-apri="alberobello" data-titolo="Alberobello">Alberobello</a>
+  <a href="#" class="link-stati" data-apri="alberona" data-titolo="Alberona">Alberona</a>
+  <a href="#" class="link-stati" data-apri="alessano" data-titolo="Alessano">Alessano</a>
+  <a href="#" class="link-stati" data-apri="alezio" data-titolo="Alezio">Alezio</a>
+  <a href="#" class="link-stati" data-apri="altamura" data-titolo="Altamura">Altamura</a>
+  <a href="#" class="link-stati" data-apri="andria" data-titolo="Andria">Andria</a>
+<a href="#" class="link-stati" data-apri="bari" data-titolo="Bari">Bari</a>
+<a href="#" class="link-stati" data-apri="binetto" data-titolo="Binetto">Binetto</a>
+<a href="#" class="link-stati" data-apri="bisceglie" data-titolo="Bisceglie">Bisceglie</a>
+<a href="#" class="link-stati" data-apri="bitetto" data-titolo="Bitetto">Bitetto</a>
+<a href="#" class="link-stati" data-apri="bitritto" data-titolo="Bitritto">Bitritto</a>
+<a href="#" class="link-stati" data-apri="capurso" data-titolo="Capurso">Capurso</a>
+<a href="#" class="link-stati" data-apri="casamassima" data-titolo="Casamassima">Casamassima</a>
+<a href="#" class="link-stati" data-apri="castellana grotte" data-titolo="Castellana Grotte">Castellana Grotte</a>
+<a href="#" class="link-stati" data-apri="cavallino" data-titolo="Cavallino">Cavallino</a>
+<a href="#" class="link-stati" data-apri="cellamare" data-titolo="Cellamare">Cellamare</a>
+<a href="#" class="link-stati" data-apri="conversano" data-titolo="Conversano">Conversano</a>
+<a href="#" class="link-stati" data-apri="foggia" data-titolo="Foggia">Foggia</a>
+<a href="#" class="link-stati" data-apri="galatina" data-titolo="Galatina">Galatina</a>
+<a href="#" class="link-stati" data-apri="giovinazzo" data-titolo="Giovinazzo">Giovinazzo</a>
+<a href="#" class="link-stati" data-apri="melendugno" data-titolo="Melendugno">Melendugno</a>
+<a href="#" class="link-stati" data-apri="modugno" data-titolo="Modugno">Modugno</a>
+<a href="#" class="link-stati" data-apri="mola di bari" data-titolo="Mola di Bari">Mola di Bari</a>
+<a href="#" class="link-stati" data-apri="molfetta" data-titolo="Molfetta">Molfetta</a>
+<a href="#" class="link-stati" data-apri="monopoli" data-titolo="Monopoli">Monopoli</a>
+<a href="#" class="link-stati" data-apri="pisignano" data-titolo="Pisignano">Pisignano</a>
+<a href="#" class="link-stati" data-apri="polignano" data-titolo="Polignano">Polignano</a>
+<a href="#" class="link-stati" data-apri="putignano" data-titolo="Putignano">Putignano</a>
+<a href="#" class="link-stati" data-apri="san foca" data-titolo="San Foca">San Foca</a>
+<a href="#" class="link-stati" data-apri="toritto" data-titolo="Toritto">Toritto</a>
+<a href="#" class="link-stati" data-apri="torre a mare" data-titolo="Torre a mare">Torre a mare</a>
+<a href="#" class="link-stati" data-apri="torre dellorso" data-titolo="Torre dell'orso">Torre dell'orso</a>
+<a href="#" class="link-stati" data-apri="santandrea" data-titolo="Torre Sant'Andrea">Torre Sant'Andrea</a>
+<a href="#" class="link-stati" data-apri="saracena" data-titolo="Torre Saracena">Torre Saracena</a>
+<a href="#" class="link-stati" data-apri="trani" data-titolo="Trani">Trani</a>
+<a href="#" class="link-stati" data-apri="valenzano" data-titolo="Valenzano">Valenzano</a>
+<a href="#" class="link-stati" data-apri="vernole" data-titolo="Vernole">Vernole</a>
+<a href="#" class="link-stati" data-apri="vieste" data-titolo="Vieste">Vieste</a>
 
 </div>
 
@@ -4065,8 +4065,8 @@ z
 <!-- UMBRIA -->
 <div id="umbria" style="display:none;">
   <button data-apri="regioni" data-titolo="Umbria">← Torna alle regioni</button>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="cascia" data-titolo="Cascia">Cascia</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="norcia" data-titolo="Norcia">Norcia</a>
+  <a href="#" class="link-stati" data-apri="cascia" data-titolo="Cascia">Cascia</a>
+  <a href="#" class="link-stati" data-apri="norcia" data-titolo="Norcia">Norcia</a>
 </div>
 
 <!-- CASCIA -->
@@ -4218,8 +4218,8 @@ z
 <!-- ABRUZZO -->
 <div id="abruzzo" style="display:none;">
   <button data-apri="regioni" data-titolo="Abruzzo">← Torna alle regioni</button>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="colledara" data-titolo="Colledara">Colledara</a>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="teramo" data-titolo="Teramo">Teramo</a>
+  <a href="#" class="link-stati" data-apri="colledara" data-titolo="Colledara">Colledara</a>
+  <a href="#" class="link-stati" data-apri="teramo" data-titolo="Teramo">Teramo</a>
 </div>
 
 <!-- COLLEDARA -->
@@ -4396,7 +4396,7 @@ z
 <!-- LAZIO -->
 <div id="lazio" style="display:none;">
   <button data-apri="regioni" data-titolo="Lazio">← Torna alle regioni</button>
-  <a href="#" class="link-stati.link-s:active:active:active" data-apri="roma" data-titolo="Roma">Roma</a>
+  <a href="#" class="link-stati" data-apri="roma" data-titolo="Roma">Roma</a>
 </div>
 
 <!-- ROMA -->
@@ -4730,7 +4730,7 @@ z
 <!-- SANTORINI -->
 <div id="santorini" style="display:none;">
  <button data-apri="regioni" data-titolo="Santorini">← Torna alle regioni</button>
-   <a href="#" class="link-stati.link-s:active:active:active" data-apri="acaya" data-titolo="Acaya">Acaya</a>
+   <a href="#" class="link-stati" data-apri="acaya" data-titolo="Acaya">Acaya</a>
 
 
 </div>
