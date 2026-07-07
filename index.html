@@ -4776,51 +4776,42 @@ z
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  // Gestore universale dei clic su tutta la pagina
-  document.addEventListener("click", function(e) {
-    
-    // Cerca se l'elemento cliccato (o un suo genitore come <a> o <button>) ha "data-apri"
-    const bottone = e.target.closest("[data-apri]");
-    
-    // Se non abbiamo cliccato un elemento con data-apri, non fare nulla
-    if (!bottone) return;
+    document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("click", function(e) {
+        const bottone = e.target.closest("[data-apri]");
+        if (!bottone) return;
 
-    // Impedisce al link di ricaricare la pagina
-    e.preventDefault();
+        e.preventDefault();
 
-    const idTarget = bottone.dataset.apri;
-    const nuovoTitolo = bottone.dataset.titolo;
+        const idTarget = bottone.dataset.apri;
+        const nuovoTitolo = bottone.dataset.titolo;
+        const sezioneTarget = document.getElementById(idTarget);
 
-    // 1. Trova la sezione da mostrare
-    const sezioneTarget = document.getElementById(idTarget);
+        if (sezioneTarget) {
+          // Nasconde lo stato iniziale e tutte le schede/liste/tabelle generate
+          const sezioniDaNascondere = document.querySelectorAll('nav#stati, div[id]:not(#titolo):not(header)');
+          sezioniDaNascondere.forEach(s => {
+            s.style.display = "none";
+          });
 
-    if (sezioneTarget) {
-      // 2. Nascondi TUTTI i contenitori di navigazione e le tabelle
-      // Nascondiamo il nav degli stati, il div regioni, e tutti i div delle città
-      const sezioniDaNascondere = document.querySelectorAll('nav#stati, div#regioni, div[id]:not(#titolo):not(header)');
-      sezioniDaNascondere.forEach(s => {
-        s.style.display = "none";
-      });
+          // Mostra solo l'ID cliccato
+          sezioneTarget.style.display = "block";
 
-      // 3. Mostra solo la sezione che ci serve
-      sezioneTarget.style.display = "block";
+          // Cambia dinamicamente il titolo principale dell'header
+          if (nuovoTitolo) {
+            const elementoTitolo = document.getElementById("titolo");
+            if (elementoTitolo) {
+              elementoTitolo.textContent = nuovoTitolo;
+            }
+          }
 
-      // 4. Cambia il titolo in alto se è stato specificato nel bottone
-      if (nuovoTitolo) {
-        const elementoTitolo = document.getElementById("titolo");
-        if (elementoTitolo) {
-          elementoTitolo.textContent = nuovoTitolo;
+          // Riporta la pagina in cima
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+        } else {
+          console.warn("Errore: Sezione non trovata nel codice HTML con id: " + idTarget);
         }
-      }
-
-      // 5. Torna in cima alla pagina (utile su mobile)
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-    } else {
-      console.warn("Errore: Non trovo una sezione con id: " + idTarget);
-    }
-  });
-});
-</script>
+      });
+    });
+  </script>
 </html>
